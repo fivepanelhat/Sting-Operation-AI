@@ -1,0 +1,31 @@
+# Python build and cache files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environment files
+.venv/
+venv/
+env/
+ENV/
+.env
+
+# IDE and OS configurations
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Dataset/YOLO cache files
+*.cache
+data/labels/*.cache
+
+# Model Weights
+*.pt
+!models/trained_models/**/weights/best.pt
+!models/trained_models/**/weights/last.pt
+
+# Training runs (unless explicitly committed under trained_models)
+runs/
+models/trained_models/v4_final_run/

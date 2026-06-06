@@ -1,7 +1,8 @@
+path: data
+train: images/train
+val: images/val
 names:
   0: Apis_mellifera
   1: Vespula_germanica
   2: Vespa_velutina
-path: /content/drive/MyDrive/Sting_Operation_AI/data
-train: images/train
-val: images/val
+
