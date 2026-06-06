@@ -128,3 +128,10 @@ We have replaced and merged the dataset with larger, high-quality datasets from 
 
 *Note: With these updated datasets and corrected label mappings (Wasps -> Class 1, Bees -> Class 0), training a local multi-class model is expected to approach these high-accuracy reference benchmarks.*
 
+---
+
+## Edge AI & IoT Hardware Setup
+To deploy this model on your physical tracking and targeting device:
+- Refer to the comprehensive [Edge AI & IoT Hardware Setup Guide](file:///c:/Users/Admin/Track%20and%20Zap/Sting-Operation-AI/docs/HARDWARE_SETUP.md) for a full hardware catalog (Raspberry Pi 5 + Hailo-8L NPU Kit), physical wiring schematics, PCIe driver installation steps, and the unified Python script for servo tracking, relay firing, and local Ollama/Gemma reasoning.
+
+
