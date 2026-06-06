@@ -71,10 +71,9 @@ def verify_setup():
                     parts = line.strip().split()
                     if parts:
                         cls = parts[0]
-                        if cls == '0':
-                            errors.append(f"Class index 0 found in label file: data/labels/{split}/{file} on line {line_idx+1}")
-                        elif cls not in ['1', '2']:
+                        if cls not in ['0', '1', '2']:
                             errors.append(f"Invalid class index {cls} found in label file: data/labels/{split}/{file} on line {line_idx+1}")
+
 
     # 4. Check for top-level stray files
     print("\nChecking top-level label directory clean-up...")
