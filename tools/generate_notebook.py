@@ -1,0 +1,180 @@
+import json
+import os
+
+def main():
+    notebook = {
+        "cells": [
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "# Sting Operation AI: Bee & Wasp Detection (Google Colab)\n",
+                    "\n",
+                    "This notebook mounts your Google Drive, pulls the latest clean and optimized repository from GitHub, configures your Roboflow credentials, and sets up training on Colab's GPU."
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "### 1. Mount Google Drive"
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "from google.colab import drive\n",
+                    "drive.mount('/content/drive')"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "### 2. Navigate and Sync with GitHub\n",
+                    "Navigate to your project directory inside Google Drive. If the project isn't cloned yet, clone it. Otherwise, pull the latest changes we made (class mapping fixes, enhanced scripts, and full dataset)."
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "import os\n",
+                    "project_path = '/content/drive/MyDrive/Sting_Operation_AI'\n",
+                    "\n",
+                    "if not os.path.exists(project_path):\n",
+                    "    # Clone the repository if it doesn't exist\n",
+                    "    %cd /content/drive/MyDrive/\n",
+                    "    !git clone https://github.com/fivepanelhat/Sting-Operation-AI.git Sting_Operation_AI\n",
+                    "else:\n",
+                    "    print(\"Project directory found. Pulling latest updates...\")\n",
+                    "    %cd {project_path}\n",
+                    "    !git pull"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "### 3. Install Dependencies\n",
+                    "Install the required libraries (ultralytics, roboflow, and python-dotenv) inside the Google Colab VM."
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "%cd {project_path}\n",
+                    "!pip install ultralytics roboflow python-dotenv"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "### 4. Configure Roboflow API Key\n",
+                    "Run this cell and paste your Roboflow Private API Key (`NQNQbsiMxbU33fU0UvbC`). This will write it to a local `.env` file so the cloud inference script can access it securely."
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "import getpass\n",
+                    "\n",
+                    "api_key = getpass.getpass(\"Paste your Roboflow Private API Key here: \").strip()\n",
+                    "if api_key:\n",
+                    "    with open(\".env\", \"w\") as f:\n",
+                    "        f.write(f\"ROBOFLOW_API_KEY={api_key}\\n\")\n",
+                    "    print(\"API Key saved to .env file successfully!\")\n",
+                    "else:\n",
+                    "    print(\"API Key cannot be empty.\")"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "### 5. Verify Dataset and Configuration\n",
+                    "Run our verification script to ensure the folder structure, YAML paths, and class indices (bees = 0, wasps = 1) are correct."
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "!python tools/verify_setup.py"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "### 6. Run Model Training (Using Colab GPU)\n",
+                    "Train the YOLOv8 model on the unified wasps + bees dataset using Colab's GPU. The script automatically detects hardware acceleration."
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "# Recommend 50 epochs, but you can adjust as needed\n",
+                    "!python train.py --epochs 50 --imgsz 640 --name v4_final_run --device cuda"
+                ]
+            },
+            {
+                "cell_type": "markdown",
+                "metadata": {},
+                "source": [
+                    "### 7. Run Inference / Predictions\n",
+                    "Test the model inference locally or via the Roboflow Cloud API client."
+                ]
+            },
+            {
+                "cell_type": "code",
+                "execution_count": None,
+                "metadata": {},
+                "outputs": [],
+                "source": [
+                    "# Local inference using the best weights\n",
+                    "!python predict.py data/images/val/vespula-103-_jpg.rf.c9b0524cd875f3a56d58b42afffe9e3d.jpg\n",
+                    "\n",
+                    "# Or hosted cloud inference via Roboflow API\n",
+                    "# !python predict.py data/images/val/ -rf"
+                ]
+            }
+        ],
+        "metadata": {
+            "kernelspec": {
+                "display_name": "Python 3",
+                "language": "python",
+                "name": "python3"
+            },
+            "language_info": {
+                "name": "python"
+            }
+        },
+        "nbformat": 4,
+        "nbformat_minor": 2
+    }
+    
+    output_path = r"c:\Users\Admin\Track and Zap\Sting-Operation-AI\Sting_Operation_AI_Colab.ipynb"
+    with open(output_path, 'w', encoding='utf-8') as f:
+        json.dump(notebook, f, indent=1)
+    print("Generated Sting_Operation_AI_Colab.ipynb successfully!")
+
+if __name__ == '__main__':
+    main()
