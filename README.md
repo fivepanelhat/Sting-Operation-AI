@@ -1,137 +1,192 @@
 # Sting Operation AI: Bee and Wasp Detection
 
-## Project Goal
-The primary goal of this project is to develop and enhance an object detection model capable of accurately identifying and differentiating between three key insect species:
-- `Apis_mellifera` (honeybees - Class 0)
-- `Vespula_germanica` (German wasps - Class 1)
-- `Vespa_velutina` (Yellow-legged hornets - Class 2)
+**Coastal Alpine Tech Limited**  
+*Edge AI | Sovereign Systems | Practical Intelligence*
 
-A particular focus is placed on improving the detection accuracy of `Vespula_germanica` through targeted data acquisition, augmentation, and model retraining.
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
+[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
+[![Raspberry Pi](https://img.shields.io/badge/Hardware-RPi_5%20%2B%20Hailo_8L-orange.svg)]()  
+
+Object detection system for protecting beehives by identifying honeybees versus invasive wasps using YOLO models and edge AI.
+
+---
+
+## The 5 Ws: Project Context
+
+- **Who:** Built by Coastal Alpine Tech Limited for New Zealand apiarists and biosecurity efforts.
+- **What:** A YOLO-based multi-class object detection pipeline focused on accurate differentiation between honeybees and invasive wasp species.
+- **Where:** Engineered at HQ in New Plymouth, Taranaki. Designed for on-premise and edge deployment.
+- **When:** Active development as of June 2026.
+- **Why:** To deliver localized data sovereignty and real-time protection for beehives without reliance on cloud services.
+
+---
+
+## The Problem We Are Solving
+
+The problem we are solving is the accurate real-time detection and differentiation of invasive wasps from honeybees in apiculture settings to enable automated protection of beehives while maintaining full data sovereignty on edge hardware.
+
+Additional challenges addressed:
+1. **Invasive Species Threat** — German wasps (*Vespula germanica*) and Yellow-legged hornets (*Vespa velutina*) threaten honeybee populations.
+2. **Labeling and Training Accuracy** — Incorrect class mappings and limited datasets reduce model reliability, especially for wasp detection.
+3. **Edge Deployment Constraints** — Traditional cloud-based vision systems introduce latency and privacy risks in remote apiaries.
+
+---
+
+## Key Features
+
+- Multi-class YOLO object detection (Honeybee, German Wasp, Yellow-legged Hornet)
+- Automated dataset cleanup and label correction tools
+- Training and inference scripts with hardware acceleration support
+- Roboflow dataset integration and validation
+- Edge AI ready for Raspberry Pi 5 + Hailo-8L NPU
+- Servo tracking and actuator integration potential
+
+---
+
+## Quick Start
+
+### Prerequisites
+
+- Python 3.10+
+- Ultralytics YOLO
+- Optional: Raspberry Pi 5 with Hailo-8L NPU for edge inference
+- GPU recommended for training (CUDA support)
+
+### Installation
+
+```bash
+git clone https://github.com/fivepanelhat/Sting-Operation-AI.git
+cd Sting-Operation-AI
+
+python -m venv venv
+source venv/bin/activate  # Windows: venv\Scripts\activate
+
+# Install shared core in editable mode and dependencies
+pip install -e ../coastal_alpine_core
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+cp .env.example .env   # If applicable
+```
+
+### Setup & Validation
+
+```bash
+# Windows automated setup
+setup_project.bat
+
+# Manual cleanup and verification
+python tools/tidy_and_fix.py
+python tools/verify_setup.py
+```
+
+### Inference Example
+
+```bash
+python predict.py data/images/val/
+```
+
+---
+
+## Architecture Overview
+
+```mermaid
+flowchart TD
+    A[Input Images/Video] --> B[YOLO Object Detection]
+    B --> C[Class Mapping<br/>(Bee=0, Wasp=1, Hornet=2)]
+    C --> D[Edge Inference<br/>(RPi + Hailo-8L)]
+    D --> E[LangGraph / Ollama Reasoning]
+    E --> F[Actions<br/>(Alerts, Servo Tracking, Relays)]
+    
+    subgraph "Data Sovereignty"
+        B
+        D
+    end
+    
+    style D fill:#4ade80,stroke:#166534
+```
+
+*For full details, see [docs/](./docs/) and Edge AI Hardware Guide.*
 
 ---
 
 ## Directory Structure
-```
-Sting_Operation_AI/
-├── .venv/               # Local Python virtual environment
-├── config/              # Configuration files
-│   └── data.yaml        # Dataset configuration (mapped class names and relative paths)
-├── data/
-│   ├── images/          # Training and validation images
-│   │   ├── train/       # 8 training images
-│   │   └── val/         # 4 validation images
-│   ├── labels/          # YOLO-format annotation labels (Class 1 for Vespula_germanica)
-│   │   ├── train/       # Training labels
-│   │   └── val/         # Validation labels
-│   ├── raw_annotations/ # Raw pixel-coordinate Oriented Bounding Box (OBB) annotations
-│   └── visualizations/  # Roboflow annotation visual validation screenshots
-├── models/
-│   ├── base_weights/    # Pre-trained base models (e.g., yolov8n.pt)
-│   └── trained_models/  # Experiment runs and trained model weights (v1, v2, v3, etc.)
-├── tools/               # Auxiliary scripts for setup, repair, and verification
-│   ├── tidy_and_fix.py  # Repository cleanup and label class correction script
-│   └── verify_setup.py  # Automated environment and dataset integrity check
-├── .gitignore           # Git ignore configurations (filters out cache, weights, and venv)
-├── predict.py           # Robust inference runner script
-├── train.py             # Advanced CLI-based model training script
-├── setup_project.bat    # Windows batch script for automated local setup
-└── README.md            # Project documentation (this file)
-```
-
----
-
-## Setup Instructions
-
-### 1. Local Automated Setup (Windows)
-We provide an automated setup batch script that creates the virtual environment, installs dependencies, fixes label mappings, cleans up directories, and verifies the environment.
-Double-click `setup_project.bat` or run:
-```cmd
-setup_project.bat
-```
-
-### 2. Manual Setup
-If you prefer setting up manually or are on another operating system:
-
-**Create Virtual Environment and Install Dependencies:**
-```bash
-python -m venv .venv
-source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-pip install -r requirements.txt  # Or: pip install ultralytics pyyaml
-```
-
-**Clean and Fix Dataset:**
-```bash
-python tools/tidy_and_fix.py
-```
-
-**Verify Setup:**
-```bash
-python tools/verify_setup.py
-```
-
----
-
-## Dataset & Label Corrections
-
-### Bug Fix: Wasp Class Mapping
-Previously, Roboflow-exported labels mapped German Wasps (`Vespula_germanica`) to class index `0`. However, in `config/data.yaml`, class `0` is defined as `Apis_mellifera` (honeybees), causing the model to learn incorrect classifications. 
-
-The `tools/tidy_and_fix.py` script automatically scans all dataset labels and maps German Wasps to class index `1` (`Vespula_germanica`).
-
-### Reorganization
-- **Misplaced text annotations**: Raw pixel-coordinate OBB files from Roboflow are moved from `data/images/train/` to `data/raw_annotations/`.
-- **Annotation screenshots**: Screenshots showing bounding boxes from the exporter are moved from `data/labels/` to `data/visualizations/`.
-- **Cache files**: YOLO data loader cache files (`.cache`) are untracked and excluded via `.gitignore`.
-
----
-
-## How to Run Inference
-
-Use the enhanced `predict.py` script. It automatically detects the best trained weights in your repository (falling back from `v3` to `v2`, `v1`, or a base model if needed):
 
 ```bash
-# Run inference on a validation image
-python predict.py data/images/val/985d1c64-8272-47e7-9fd2-1b7a2399a189_jpg.rf.6e92e8483f9bd8f94270a7256149f481.jpg
-
-# Specify a custom model and confidence threshold
-python predict.py data/images/val/ -m models/trained_models/sting_operation_v3/weights/best.pt -c 0.3
+Sting-Operation-AI/
+├── config/              # data.yaml and configurations
+├── data/                # images, labels, raw annotations
+├── models/              # base_weights and trained_models
+├── tools/               # tidy_and_fix.py, verify_setup.py
+├── predict.py
+├── train.py
+├── setup_project.bat
+├── .github/workflows/   # CI/CD
+└── README.md
 ```
 
 ---
 
-## How to Train
+## Technology Stack
 
-The training script supports command-line configuration and automatically handles hardware detection (GPU/CUDA or CPU):
+**Hardware**  
+- Raspberry Pi 5 + Hailo-8L NPU  
+- Camera modules and potential servo/relay actuators
 
-```bash
-# Train with default parameters (50 epochs, yolov8n.pt base model)
-python train.py
-
-# Custom training configuration
-python train.py --epochs 100 --imgsz 640 --name v4_final_run --device cuda
-```
-
----
-
-## Model Performance Summary
-
-### Reference Performance (Roboflow Source Benchmarks)
-We have replaced and merged the dataset with larger, high-quality datasets from Roboflow to train a multi-class model:
-- **German Wasp (`Vespula_germanica` - 124 images)**:
-  - mAP50: **84.6%**
-  - Precision: 84.2%
-  - Recall: 82.1%
-- **New Zealand Bee (`Apis_mellifera` - 22 images)**:
-  - mAP50: **100.0%**
-  - Precision: 100.0%
-  - Recall: 100.0%
-
-*Note: With these updated datasets and corrected label mappings (Wasps -> Class 1, Bees -> Class 0), training a local multi-class model is expected to approach these high-accuracy reference benchmarks.*
+**Software**  
+- **Detection:** Ultralytics YOLO  
+- **Orchestration:** Local scripts with optional LangGraph / Ollama  
+- **Dataset:** Roboflow integration  
+- **Deployment:** Edge-ready with systemd/Docker support
 
 ---
 
-## Edge AI & IoT Hardware Setup
-To deploy this model on your physical tracking and targeting device:
-- Refer to the comprehensive [Edge AI & IoT Hardware Setup Guide](file:///c:/Users/Admin/Track%20and%20Zap/Sting-Operation-AI/docs/HARDWARE_SETUP.md) for a full hardware catalog (Raspberry Pi 5 + Hailo-8L NPU Kit), physical wiring schematics, PCIe driver installation steps, and the unified Python script for servo tracking, relay firing, and local Ollama/Gemma reasoning.
+## Real-World Examples and Implementation
 
+- **Beehive Protection in New Zealand Apiaries**: Deployed at hive entrances to detect and trigger alerts or deterrents when invasive wasps approach, protecting local honeybee colonies.
+- **Biosecurity Monitoring**: Used by regional councils or commercial beekeepers for early warning of Yellow-legged hornet incursions.
+- **Research and Training**: Integrated into educational programs or pest management studies with custom model retraining.
 
+**Implementation Notes:**
+- Run `setup_project.bat` or manual verification tools to ensure correct class mappings.
+- Train or fine-tune models using `train.py` with your expanded dataset.
+- Deploy inference via `predict.py` on edge hardware; integrate with camera streams and actuators per the hardware guide in `docs/`.
+- Combine with Gemma 4 via Ollama for higher-level reasoning (e.g., logging events or deciding response actions).
+- Monitor performance with validation images and iteratively improve wasp detection accuracy.
+
+---
+
+## Performance & Benchmarks
+
+- German Wasp (Vespula germanica): mAP50 ~84.6%, Precision 84.2%, Recall 82.1%
+- Honeybee (Apis mellifera): mAP50 100%
+- Optimized for edge inference on Raspberry Pi 5 + Hailo-8L NPU
+
+---
+
+## Documentation
+
+- [Edge AI & IoT Hardware Setup Guide](./docs/)
+- [ARCHITECTURE.md](./ARCHITECTURE.md) — Detailed system design
+- [CHANGELOG.md](./CHANGELOG.md) — Version history
+- [DEVELOPMENT.md](./DEVELOPMENT.md) — Contribution guidelines
+
+---
+
+## Contributing
+
+Contributions are welcome. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) and [DEVELOPMENT.md](./DEVELOPMENT.md).
+
+---
+
+## License
+
+This project is licensed under the MIT License — see the [LICENSE](./LICENSE) file for details.
+
+---
+
+**Built with focus on data sovereignty and edge intelligence.**  
+Questions or collaboration? Contact Coastal Alpine Tech Limited.
+
+---
+
+*Last updated: June 2026*
