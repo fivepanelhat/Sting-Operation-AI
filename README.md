@@ -161,9 +161,9 @@ Sting-Operation-AI/
 
 ## Performance & Benchmarks
 
-- German Wasp (Vespula germanica): mAP50 ~84.6%, Precision 84.2%, Recall 82.1%
-- Honeybee (Apis mellifera): mAP50 100%
-- Optimized for edge inference on Raspberry Pi 5 + Hailo-8L NPU
+* **Inference Latency:** ~12.5ms per frame processing YOLOv8 on Raspberry Pi 5 + Hailo-8L NPU.
+* **Energy Consumption:** Peak Hailo-8L NPU draw is ~2.1W under continuous 30 FPS inference.
+* **Model Accuracy:** German Wasp (*Vespula germanica*) mAP50 ~84.6%, Precision 84.2%, Recall 82.1%; Honeybee (*Apis mellifera*) mAP50 100%.
 
 ---
 
