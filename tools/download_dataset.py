@@ -98,7 +98,8 @@ def fix_downloaded_labels(data_dir):
     print(f"  Successfully corrected {fixed_count} label files.")
 
 def main():
-    base_dir = r"c:\Users\Admin\Track and Zap\Sting-Operation-AI"
+    # Dynamically resolve base directory relative to this script's location
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     data_dir = os.path.join(base_dir, "data")
     
     # 1. Install Roboflow SDK if needed

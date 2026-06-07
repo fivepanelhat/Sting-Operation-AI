@@ -28,11 +28,15 @@ echo.
 echo [2/4] Installing dependencies...
 where uv >nul 2>nul
 if !errorlevel! equ 0 (
-    echo Using uv to install ultralytics and pyyaml...
-    uv pip install ultralytics pyyaml
+    echo Using uv to install shared core and dependencies...
+    uv pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
+    uv pip install -r requirements.txt
+    uv pip install -r requirements-dev.txt
 ) else (
-    echo Using pip to install ultralytics and pyyaml...
-    .venv\Scripts\pip install ultralytics pyyaml
+    echo Using pip to install shared core and dependencies...
+    .venv\Scripts\pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
+    .venv\Scripts\pip install -r requirements.txt
+    .venv\Scripts\pip install -r requirements-dev.txt
 )
 
 :: 3. Run tidy-up and class-fix scripts

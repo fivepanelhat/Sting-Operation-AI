@@ -10,12 +10,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /app
 
-# Copy shared core and local project files
-COPY ../coastal_alpine_core /coastal_alpine_core
+# Copy requirements and install packages
 COPY requirements.txt .
-
-# Install packages
-RUN pip install --no-cache-dir -e /coastal_alpine_core
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy source code

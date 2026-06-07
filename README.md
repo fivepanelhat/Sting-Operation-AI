@@ -1,11 +1,15 @@
 # Sting Operation AI: Bee and Wasp Detection
 
+![Sting Operation AI Banner](assets/social_preview.png)
+
 **Coastal Alpine Tech Limited**  
 *Edge AI | Sovereign Systems | Practical Intelligence*
 
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
-[![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
-[![Raspberry Pi](https://img.shields.io/badge/Hardware-RPi_5%20%2B%20Hailo_8L-orange.svg)]()  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)  
+[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
+[![Hardware: Edge AI](https://img.shields.io/badge/Hardware-Raspberry%20Pi%205%20%2B%20NPU-orange.svg)]()  
+[![Sovereignty: Offline Native](https://img.shields.io/badge/Sovereignty-Offline%20Native-green.svg)]()  
+[![CI/CD: Active](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/fivepanelhat/Sting-Operation-AI/actions)
 
 Object detection system for protecting beehives by identifying honeybees versus invasive wasps using YOLO models and edge AI.
 
@@ -61,8 +65,8 @@ cd Sting-Operation-AI
 python -m venv venv
 source venv/bin/activate  # Windows: venv\Scripts\activate
 
-# Install shared core in editable mode and dependencies
-pip install -e ../coastal_alpine_core
+# Install shared core and dependencies
+pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
 cp .env.example .env   # If applicable
@@ -91,11 +95,11 @@ python predict.py data/images/val/
 
 ```mermaid
 flowchart TD
-    A[Input Images/Video] --> B[YOLO Object Detection]
-    B --> C[Class Mapping<br/>(Bee=0, Wasp=1, Hornet=2)]
-    C --> D[Edge Inference<br/>(RPi + Hailo-8L)]
-    D --> E[LangGraph / Ollama Reasoning]
-    E --> F[Actions<br/>(Alerts, Servo Tracking, Relays)]
+    A["Input Images/Video"] --> B["YOLO Object Detection"]
+    B --> C["Class Mapping<br/>(Bee=0, Wasp=1, Hornet=2)"]
+    C --> D["Edge Inference<br/>(RPi + Hailo-8L)"]
+    D --> E["LangGraph / Ollama Reasoning"]
+    E --> F["Actions<br/>(Alerts, Servo Tracking, Relays)"]
     
     subgraph "Data Sovereignty"
         B

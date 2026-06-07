@@ -171,7 +171,9 @@ def main():
         "nbformat_minor": 2
     }
     
-    output_path = r"c:\Users\Admin\Track and Zap\Sting-Operation-AI\Sting_Operation_AI_Colab.ipynb"
+    # Dynamically resolve output path relative to this script's location
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+    output_path = os.path.join(base_dir, "Sting_Operation_AI_Colab.ipynb")
     with open(output_path, 'w', encoding='utf-8') as f:
         json.dump(notebook, f, indent=1)
     print("Generated Sting_Operation_AI_Colab.ipynb successfully!")

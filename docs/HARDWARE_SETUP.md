@@ -2,7 +2,7 @@
 
 This guide details the hardware catalog, physical assembly, driver installation, and software integration for deploying the **Sting Operation AI** model on a **Raspberry Pi 5** edge device. 
 
-The setup achieves real-time insect detection and tracking using the **Raspberry Pi AI Kit (Hailo-8L NPU)**, paired with a local LLM (**Ollama running Gemma 2 2B**) for local reasoning and event logging, and IoT sensors/actuators for target tracking.
+The setup achieves real-time insect detection and tracking using the **Raspberry Pi AI Kit (Hailo-8L NPU)**, paired with a local LLM (**Ollama running Gemma 4 4B**) for local reasoning and event logging, and IoT sensors/actuators for target tracking.
 
 ---
 
@@ -13,20 +13,20 @@ The following diagram illustrates the hardware connections and data flow:
 ```mermaid
 graph TD
     %% Inputs
-    C[CSI Camera Module 3] -->|Video Frames| Pi[Raspberry Pi 5]
-    S[DHT22 / Microphones] -->|Sensor Data| Pi
+    C["CSI Camera Module 3"] -->|Video Frames| Pi["Raspberry Pi 5"]
+    S["DHT22 / Microphones"] -->|Sensor Data| Pi
     
     %% NPU Acceleration
-    Pi -->|Image Data PCIe| H[Hailo-8L NPU / AI Kit]
+    Pi -->|Image Data PCIe| H["Hailo-8L NPU / AI Kit"]
     H -->|Bounding Boxes 30+ FPS| Pi
     
     %% Local Reasoning
-    Pi -->|Event Trigger| Ol[Ollama / Gemma 2B]
+    Pi -->|Event Trigger| Ol["Ollama / Gemma 2B"]
     Ol -->|Reasoning & Log| Pi
     
     %% Outputs / Actuators
-    Pi -->|PWM Control| G[Pan/Tilt Servo Gimbal]
-    Pi -->|Relay Trigger| Z[Zapping Laser / Grid]
+    Pi -->|PWM Control| G["Pan/Tilt Servo Gimbal"]
+    Pi -->|Relay Trigger| Z["Zapping Laser / Grid"]
     
     %% Styling
     style Pi fill:#c2185b,stroke:#880e4f,stroke-width:2px,color:#fff
@@ -114,9 +114,9 @@ Install Ollama to run lightweight LLMs locally on the Raspberry Pi 5 CPU:
 ```bash
 curl -fsSL https://ollama.com/install.sh | sh
 ```
-Once installed, download Google's **Gemma 2 2B Instruct** model, which fits easily within the Pi's memory:
+Once installed, download Google's **Gemma 4 4B Instruct** model (specifically the optimized tag `gemma4:e4b`), which fits easily within the Pi's memory:
 ```bash
-ollama pull gemma2:2b
+ollama pull gemma4:e4b
 ```
 
 ---
@@ -163,7 +163,7 @@ def log_event_with_gemma(insect_type, count, confidence):
     )
     
     payload = {
-        "model": "gemma2:2b",
+        "model": "gemma4:e4b",
         "prompt": prompt,
         "stream": False
     }

@@ -3,7 +3,8 @@ import sys
 import yaml
 
 def verify_setup():
-    base_dir = r"c:\Users\Admin\Track and Zap\Sting-Operation-AI"
+    # Dynamically resolve base directory relative to this script's location
+    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
     data_dir = os.path.join(base_dir, "data")
     config_file = os.path.join(base_dir, "config", "data.yaml")
     
@@ -88,10 +89,11 @@ def verify_setup():
     # 5. Check virtual environment
     print("\nChecking virtual environment...")
     venv_dir = os.path.join(base_dir, ".venv")
-    if not os.path.exists(venv_dir):
-        warnings.append(".venv directory is missing! Run local setup first.")
+    shared_venv_dir = os.path.join(base_dir, "..", ".venv")
+    if os.path.exists(venv_dir) or os.path.exists(shared_venv_dir):
+        print("  [OK] Virtual environment (.venv) found.")
     else:
-        print("  [OK] .venv exists.")
+        warnings.append(".venv directory is missing (checked local and shared stack-wide)! Run local setup first.")
 
     # 6. Check trained model
     print("\nChecking trained model weights...")

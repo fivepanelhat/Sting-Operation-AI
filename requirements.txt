@@ -5,3 +5,4 @@ roboflow>=1.1.27
 torch>=2.2.0
 torchvision>=0.17.0
 numpy>=1.23.0,<2
+coastal-alpine-core @ git+https://github.com/fivepanelhat/coastal-alpine-core.git
