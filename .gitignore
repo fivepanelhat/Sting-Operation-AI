@@ -29,3 +29,21 @@ data/labels/*.cache
 # Training runs (unless explicitly committed under trained_models)
 runs/
 models/trained_models/v4_final_run/
+
+# Coastal Alpine Tech - AI SecOps
+.env.*
+secrets/
+.secrets.baseline
+
+# AI Model Weights & Data (Never commit these!)
+*.pth
+*.onnx
+weights/
+datasets/
+*.mp4
+*.jpg
+*.png
+
+# Python/Edge specific
+*.log
+
