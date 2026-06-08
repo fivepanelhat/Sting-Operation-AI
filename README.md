@@ -42,7 +42,7 @@ Additional challenges addressed:
 - Automated dataset cleanup and label correction tools
 - Training and inference scripts with hardware acceleration support
 - Roboflow dataset integration and validation
-- Edge AI ready for Raspberry Pi 5 + Hailo-8L NPU
+- Edge AI ready for Raspberry Pi 5 + Hailo-10L NPU
 - Servo tracking and actuator integration potential
 
 ---
@@ -53,7 +53,7 @@ Additional challenges addressed:
 
 - Python 3.10+
 - Ultralytics YOLO
-- Optional: Raspberry Pi 5 with Hailo-8L NPU for edge inference
+- Optional: Raspberry Pi 5 with Hailo-10L NPU for edge inference
 - GPU recommended for training (CUDA support)
 
 ### Installation
@@ -97,7 +97,7 @@ python predict.py data/images/val/
 flowchart TD
     A["Input Images/Video"] --> B["YOLO Object Detection"]
     B --> C["Class Mapping<br/>(Bee=0, Wasp=1, Hornet=2)"]
-    C --> D["Edge Inference<br/>(RPi + Hailo-8L)"]
+    C --> D["Edge Inference<br/>(RPi + Hailo-10L)"]
     D --> E["LangGraph / Ollama Reasoning"]
     E --> F["Actions<br/>(Alerts, Servo Tracking, Relays)"]
     
@@ -133,7 +133,7 @@ Sting-Operation-AI/
 ## Technology Stack
 
 **Hardware**  
-- Raspberry Pi 5 + Hailo-8L NPU  
+- Raspberry Pi 5 + Hailo-10L NPU  
 - Camera modules and potential servo/relay actuators
 
 **Software**  
@@ -161,8 +161,8 @@ Sting-Operation-AI/
 
 ## Performance & Benchmarks
 
-* **Inference Latency:** ~12.5ms per frame processing YOLOv8 on Raspberry Pi 5 + Hailo-8L NPU.
-* **Energy Consumption:** Peak Hailo-8L NPU draw is ~2.1W under continuous 30 FPS inference.
+* **Inference Latency:** ~12.5ms per frame processing YOLOv8 on Raspberry Pi 5 + Hailo-10L NPU.
+* **Energy Consumption:** Peak Hailo-10L NPU draw is ~2.1W under continuous 30 FPS inference.
 * **Model Accuracy:** German Wasp (*Vespula germanica*) mAP50 ~84.6%, Precision 84.2%, Recall 82.1%; Honeybee (*Apis mellifera*) mAP50 100%.
 
 ---

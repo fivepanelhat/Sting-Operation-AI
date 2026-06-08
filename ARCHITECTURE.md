@@ -15,7 +15,7 @@ The sentinel box runs a customized YOLOv8 object detection model on edge hardwar
                                │
                                ▼
   ┌─────────────┐        ┌─────────────┐
-  │ Hailo-8L    │◄───────┤ YOLOv8 OBB  │
+  │ Hailo-10L    │◄───────┤ YOLOv8 OBB  │
   │ Accelerator │        │ Classifier  │
   └──────┬──────┘        └─────────────┘
          │
@@ -48,9 +48,9 @@ Sting-Operation-AI uses **Oriented Bounding Boxes (OBB)**:
 
 ---
 
-## 3. Edge Compilation & Quantization (Hailo-8L)
+## 3. Edge Compilation & Quantization (Hailo-10L)
 
 To achieve real-time latency (<15ms) on the Raspberry Pi 5, the trained PyTorch weights (`best.pt`) are compiled into a HEF (Hailo Executable Format) file:
 1. **Export to ONNX:** The model is exported to an ONNX graph with static input shapes (e.g. 640x640).
 2. **Quantization:** The Hailo Software Suite quantizes the model from FP32 to INT8 precision using representative validation images to minimize accuracy degradation.
-3. **Compilation:** The Hailo Compiler compiles the quantized graph into a `.hef` file loaded directly into the Hailo-8L hardware buffer.
+3. **Compilation:** The Hailo Compiler compiles the quantized graph into a `.hef` file loaded directly into the Hailo-10L hardware buffer.

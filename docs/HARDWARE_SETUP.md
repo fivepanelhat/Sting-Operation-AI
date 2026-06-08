@@ -2,7 +2,7 @@
 
 This guide details the hardware catalog, physical assembly, driver installation, and software integration for deploying the **Sting Operation AI** model on a **Raspberry Pi 5** edge device. 
 
-The setup achieves real-time insect detection and tracking using the **Raspberry Pi AI Kit (Hailo-8L NPU)**, paired with a local LLM (**Ollama running Gemma 4 4B**) for local reasoning and event logging, and IoT sensors/actuators for target tracking.
+The setup achieves real-time insect detection and tracking using the **Raspberry Pi AI Kit (Hailo-10L NPU)**, paired with a local LLM (**Ollama running Gemma 4 4B**) for local reasoning and event logging, and IoT sensors/actuators for target tracking.
 
 ---
 
@@ -17,7 +17,7 @@ graph TD
     S["DHT22 / Microphones"] -->|Sensor Data| Pi
     
     %% NPU Acceleration
-    Pi -->|Image Data PCIe| H["Hailo-8L NPU / AI Kit"]
+    Pi -->|Image Data PCIe| H["Hailo-10L NPU / AI Kit"]
     H -->|Bounding Boxes 30+ FPS| Pi
     
     %% Local Reasoning
@@ -41,7 +41,7 @@ graph TD
 | Category | Component | Description | Est. Cost |
 | :--- | :--- | :--- | :--- |
 | **Computing** | **Raspberry Pi 5 (8GB RAM)** | Main processor. 8GB RAM is highly recommended to host Ollama Gemma LLM and YOLOv8 concurrently. | $80.00 |
-| **AI NPU** | **Raspberry Pi AI Kit** | Includes the **Hailo-8L M.2 AI Acceleration Module** (13 TOPS) and the **Raspberry Pi M.2 HAT+**. | $70.00 |
+| **AI NPU** | **Raspberry Pi AI Kit** | Includes the **Hailo-10L M.2 AI Acceleration Module** (40 TOPS) and the **Raspberry Pi M.2 HAT+**. | $70.00 |
 | **Cooling** | **Raspberry Pi 5 Active Cooler** | Heatsink and temperature-controlled fan. Critical to prevent CPU throttling. | $5.00 |
 | **Camera** | **Raspberry Pi Camera Module 3** | 12MP Sony IMX708 sensor with autofocus. Connects via Pi 5 CSI camera port. | $25.00 |
 | **Power** | **Raspberry Pi 27W USB-C Power Supply** | 5.1V / 5A power supply. Standard chargers (e.g. 5V 3A) will trigger low-power mode. | $12.00 |
@@ -60,7 +60,7 @@ graph TD
 2. **Mount the M.2 HAT+**:
    - Insert the M.2 HAT+ ribbon cable into the PCIe slot of the Pi 5 and lock the connector tab.
    - Use the included spacers and screws to secure the M.2 HAT+ board above the Pi 5.
-3. **Insert the Hailo-8L Card**: Insert the M.2 M-key Hailo module into the slot on the HAT+ at a 30-degree angle, press down, and secure it using the small mounting screw.
+3. **Insert the Hailo-10L Card**: Insert the M.2 M-key Hailo module into the slot on the HAT+ at a 30-degree angle, press down, and secure it using the small mounting screw.
 4. **Connect the CSI Camera**: Insert the thin camera ribbon cable into the CAM0 or CAM1 connector on the Pi 5 and secure the locking tab.
 5. **Gimbal & Relay Wiring**:
    - **Servo Power**: Connect the Servos' power lines (Red/Orange) to an **external 5V power source** sharing a common Ground with the Pi. *Do not power servos directly from Pi 5 5V pins, as voltage spikes can cause system resets.*
