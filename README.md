@@ -178,11 +178,6 @@ Sting-Operation-AI/
 - [CHANGELOG.md](./CHANGELOG.md) — Version history
 - [DEVELOPMENT.md](./DEVELOPMENT.md) — Contribution guidelines
 
----
-
-## Contributing
-
-Contributions are welcome. Please see [CONTRIBUTING.md](./CONTRIBUTING.md) and [DEVELOPMENT.md](./DEVELOPMENT.md).
 
 ---
 
