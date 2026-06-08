@@ -2,6 +2,11 @@
 
 All notable changes to the `Sting-Operation-AI` repository will be documented in this file.
 
+## [1.2.0] - 2026-06-08
+
+### Added
+- Created `src/inference.py` for physical/virtual Hailo NPU communication channel setup.
+
 ## [1.0.0] - 2026-06-07
 
 ### Added
