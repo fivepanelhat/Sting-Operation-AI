@@ -1,4 +1,4 @@
 # Local Sting-Operation-AI development dependencies
 pytest>=8.0.0
 black>=24.0.0
-mypy>=1.8.0
+mypy>=2.1.0
