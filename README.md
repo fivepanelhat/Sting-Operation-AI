@@ -10,7 +10,8 @@
 [![Hardware: Edge AI](https://img.shields.io/badge/Hardware-Raspberry%20Pi%205%20%2B%20Hailo--10L%20NPU-orange.svg)]()  
 [![Sovereignty: Offline Native](https://img.shields.io/badge/Sovereignty-Offline%20Native-green.svg)]()  
 [![CI/CD: Active](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/fivepanelhat/Sting-Operation-AI/actions)  
-[![SecOps Scan](https://img.shields.io/github/actions/workflow/status/fivepanelhat/Sting-Operation-AI/security-scan.yml?branch=main&label=SecOps%20Scan&style=flat-square&color=success)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/security-scan.yml)
+[![SecOps Scan](https://img.shields.io/github/actions/workflow/status/fivepanelhat/Sting-Operation-AI/security-scan.yml?branch=main&label=SecOps%20Scan&style=flat-square&color=success)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/security-scan.yml)  
+[![Dependabot](https://img.shields.io/badge/Dependencies-Monitored-brightgreen?style=flat-square&logo=dependabot)]()
 
 Object detection system for protecting beehives by identifying honeybees versus invasive wasps using YOLO models and edge AI.
 
