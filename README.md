@@ -11,7 +11,7 @@
 [![Hardware: Edge AI](https://img.shields.io/badge/Hardware-Raspberry%20Pi%205%20%2B%20Hailo--10L%20NPU-orange.svg)]()  
 [![Sovereignty](https://img.shields.io/badge/Sovereignty-NZ%20Data%20Bound-00247D?style=flat-square)]()  
 [![CI/CD: Active](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/fivepanelhat/Sting-Operation-AI/actions)  
-[![SecOps Scan](https://img.shields.io/github/actions/workflow/status/fivepanelhat/Sting-Operation-AI/security-scan.yml?branch=main&label=SecOps%20Scan&style=flat-square&color=success)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/security-scan.yml)  
+[![SecOps Scan](https://img.shields.io/github/actions/workflow/status/fivepanelhat/Sting-Operation-AI/secops.yml?branch=main&label=SecOps%20Scan&style=flat-square&color=success)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/secops.yml)  
 [![Dependabot](https://img.shields.io/badge/Dependencies-Monitored-brightgreen?style=flat-square&logo=dependabot)]()  
 [![Sustainability](https://img.shields.io/badge/EECA%20NZ-Carbon%20Tracked-green?style=flat-square)]()
 
