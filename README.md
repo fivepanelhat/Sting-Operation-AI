@@ -1,5 +1,8 @@
 # Sting Operation AI: Bee and Wasp Detection
 
+![CI](https://github.com/UNKNOWN_OWNER/Sting-Operation-AI/actions/workflows/secops.yml/badge.svg?branch=main)
+
+
 ![Sting Operation AI Banner](assets/social_preview.png)
 
 **Coastal Alpine Tech Limited**  
