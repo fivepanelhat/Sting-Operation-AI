@@ -38,6 +38,7 @@ Object detection system for protecting beehives by identifying honeybees versus 
 The problem we are solving is the accurate real-time detection and differentiation of invasive wasps from honeybees in apiculture settings to enable automated protection of beehives while maintaining full data sovereignty on edge hardware.
 
 Additional challenges addressed:
+
 1. **Invasive Species Threat** — German wasps (*Vespula germanica*) and Yellow-legged hornets (*Vespa velutina*) threaten honeybee populations.
 2. **Labeling and Training Accuracy** — Incorrect class mappings and limited datasets reduce model reliability, especially for wasp detection.
 3. **Edge Deployment Constraints** — Traditional cloud-based vision systems introduce latency and privacy risks in remote apiaries.
@@ -140,11 +141,13 @@ Sting-Operation-AI/
 
 ## Technology Stack
 
-**Hardware**  
+### Hardware
+
 - Raspberry Pi 5 + Hailo-10L NPU  
 - Camera modules and potential servo/relay actuators
 
-**Software**  
+### Software
+
 - **Detection:** Ultralytics YOLO  
 - **Orchestration:** Local scripts with optional LangGraph / Ollama  
 - **Dataset:** Roboflow integration  
@@ -158,7 +161,8 @@ Sting-Operation-AI/
 - **Biosecurity Monitoring**: Used by regional councils or commercial beekeepers for early warning of Yellow-legged hornet incursions.
 - **Research and Training**: Integrated into educational programs or pest management studies with custom model retraining.
 
-**Implementation Notes:**
+### Implementation Notes
+
 - Run `setup_project.bat` or manual verification tools to ensure correct class mappings.
 - Train or fine-tune models using `train.py` with your expanded dataset.
 - Deploy inference via `predict.py` on edge hardware; integrate with camera streams and actuators per the hardware guide in `docs/`.
@@ -169,9 +173,9 @@ Sting-Operation-AI/
 
 ## Performance & Benchmarks
 
-* **Inference Latency:** ~12.5ms per frame processing YOLOv8 on Raspberry Pi 5 + Hailo-10L NPU.
-* **Energy Consumption:** Peak Hailo-10L NPU draw is ~2.1W under continuous 30 FPS inference.
-* **Model Accuracy:** German Wasp (*Vespula germanica*) mAP50 ~84.6%, Precision 84.2%, Recall 82.1%; Honeybee (*Apis mellifera*) mAP50 100%.
+- **Inference Latency:** ~12.5ms per frame processing YOLOv8 on Raspberry Pi 5 + Hailo-10L NPU.
+- **Energy Consumption:** Peak Hailo-10L NPU draw is ~2.1W under continuous 30 FPS inference.
+- **Model Accuracy:** German Wasp (*Vespula germanica*) mAP50 ~84.6%, Precision 84.2%, Recall 82.1%; Honeybee (*Apis mellifera*) mAP50 100%.
 
 ---
 
@@ -181,7 +185,6 @@ Sting-Operation-AI/
 - [ARCHITECTURE.md](./ARCHITECTURE.md) — Detailed system design
 - [CHANGELOG.md](./CHANGELOG.md) — Version history
 - [DEVELOPMENT.md](./DEVELOPMENT.md) — Contribution guidelines
-
 
 ---
 
@@ -196,4 +199,4 @@ Questions or collaboration? Contact Coastal Alpine Tech Limited.
 
 ---
 
-*Last updated: June 2026*
+Last updated: June 2026.
