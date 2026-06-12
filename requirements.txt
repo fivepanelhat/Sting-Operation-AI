@@ -1,5 +1,5 @@
 # Sting-Operation-AI production dependencies
-ultralytics>=4.54
+ultralytics>=8.4.66
 pyyaml>=6.0.1
 roboflow>=1.3.9
 torch>=2.12.0
