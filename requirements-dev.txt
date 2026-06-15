@@ -38,7 +38,7 @@ sphinx-rtd-theme>=3.0.0
 pre-commit>=4.0.0
 
 # Development Utilities
-ipython>=8.30.0
+ipython>=9.14.1
 ipdb>=0.13.13
 
 # Updated numpy for development (if needed)
