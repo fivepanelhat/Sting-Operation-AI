@@ -1,9 +1,5 @@
 # Sting Operation AI: Bee and Wasp Detection
 
-![CI](https://github.com/fivepanelhat/Sting-Operation-AI.git
-/actions/workflows/secops.yml/badge.svg?branch=main)
-
-
 [![CI](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/secops.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/secops.yml)
 [![RedTeam](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/redteam.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/redteam.yml)
 
@@ -69,14 +65,35 @@ Additional challenges addressed:
 - Optional: Raspberry Pi 5 with Hailo-10L NPU for edge inference
 - GPU recommended for training (CUDA support)
 
-### Installation
+### Installation & Setup
+
+We provide separate guides for system environment setup and installation for Windows and Linux users:
+
+* **Prerequisites & System Setup Guide**: Read [setup.md](setup.md)
+* **Installation Guide**: Read [installation.md](installation.md)
+
+### Quick Start (Automated Setup)
+The fastest way to install is running the cross-platform bootstrap script:
+
+```bash
+python bootstrap.py
+```
+
+ation-AI
+python bootstrap.py
+```
+
+### Manual Installation
+
+<details open>
+<summary><strong>🐧 Linux / macOS (Bash)</strong></summary>
 
 ```bash
 git clone https://github.com/fivepanelhat/Sting-Operation-AI.git
 cd Sting-Operation-AI
 
-python -m venv venv
-source venv/bin/activate  # Windows: venv\Scripts\activate
+python3 -m venv venv
+source venv/bin/activate
 
 # Install shared core and dependencies
 pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
@@ -84,6 +101,29 @@ pip install -r requirements.txt
 pip install -r requirements-dev.txt
 cp .env.example .env   # If applicable
 ```
+
+</details>
+
+<details>
+<summary><strong>🪟 Windows (PowerShell)</strong></summary>
+
+```powershell
+git clone https://github.com/fivepanelhat/Sting-Operation-AI.git
+cd Sting-Operation-AI
+
+python -m venv venv
+.\venv\Scripts\Activate.ps1
+
+# Install shared core and dependencies
+pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
+pip install -r requirements.txt
+pip install -r requirements-dev.txt
+Copy-Item .env.example .env   # If applicable
+```
+
+> **Note:** If you receive an execution policy error, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` first.
+
+</details>
 
 ### Setup & Validation
 

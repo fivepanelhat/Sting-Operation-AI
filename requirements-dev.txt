@@ -43,3 +43,9 @@ ipdb>=0.13.13
 
 # Updated numpy for development (if needed)
 numpy>=2.0,<3
+
+# Platform-Specific Dependencies (PEP 508 markers)
+colorama>=0.4.6; sys_platform == 'win32'
+pywin32>=306; sys_platform == 'win32'
+uvloop>=0.21.0; sys_platform == 'linux'
+
