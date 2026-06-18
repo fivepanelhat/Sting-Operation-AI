@@ -42,7 +42,7 @@ ipython>=8.30.0
 ipdb>=0.13.13
 
 # Updated numpy for development (if needed)
-numpy>=2.0,<3
+numpy>=2.4.6,<3
 
 # Platform-Specific Dependencies (PEP 508 markers)
 colorama>=0.4.6; sys_platform == 'win32'
