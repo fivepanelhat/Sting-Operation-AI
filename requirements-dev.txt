@@ -30,7 +30,7 @@ bandit>=1.8.0
 safety>=3.8.1
 
 # Documentation Generation
-pdoc>=15.0.0
+pdoc>=16.0.0
 sphinx>=8.1.0
 sphinx-rtd-theme>=3.0.0
 
