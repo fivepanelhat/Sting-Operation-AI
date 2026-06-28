@@ -18,7 +18,6 @@ Works with:
 
 import os
 import platform
-import shlex
 import shutil
 import subprocess
 import sys
@@ -81,17 +80,16 @@ def run_cmd(cmd, description=None):
     """Run a command with error handling."""
     if description:
         print(f"  → {description}")
-    cmd_args = shlex.split(cmd, posix=not is_windows()) if isinstance(cmd, str) else cmd
     try:
         result = subprocess.run(
-            cmd_args,
+            cmd,
             check=True,
             capture_output=True,
             text=True,
         )
         return result.stdout
     except subprocess.CalledProcessError as e:
-        print(f"  ✗ Command failed: {' '.join(cmd_args)}")
+        print(f"  ✗ Command failed: {cmd!r}")
         if e.stderr:
             # Show only last 5 lines of stderr to avoid wall of text
             lines = e.stderr.strip().split("\n")

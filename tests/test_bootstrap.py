@@ -17,7 +17,7 @@ def test_run_cmd_uses_argument_list_without_shell(monkeypatch):
 
     monkeypatch.setattr(bootstrap.subprocess, "run", fake_run)
 
-    stdout = bootstrap.run_cmd('"python" -c "print(\'ok\')"')
+    stdout = bootstrap.run_cmd(["python", "-c", "print('ok')"])
 
     assert stdout == "ok\n"
     assert recorded == {
@@ -33,14 +33,13 @@ def test_install_requirements_builds_pip_command_arguments(monkeypatch):
     pip_exe = "venv/bin/pip"
 
     monkeypatch.setattr(bootstrap.os.path, "exists", lambda path: True)
-    monkeypatch.setattr(
-        bootstrap,
-        "run_cmd",
-        lambda cmd, description=None: recorded.update(
-            {"cmd": cmd, "description": description}
-        )
-        or "installed",
-    )
+
+    def fake_run_cmd(cmd, description=None):
+        recorded["cmd"] = cmd
+        recorded["description"] = description
+        return "installed"
+
+    monkeypatch.setattr(bootstrap, "run_cmd", fake_run_cmd)
 
     assert bootstrap.install_requirements(pip_exe, "requirements-dev.txt") is True
     assert recorded == {
