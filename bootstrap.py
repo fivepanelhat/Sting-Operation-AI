@@ -89,7 +89,7 @@ def run_cmd(cmd, description=None):
         )
         return result.stdout
     except subprocess.CalledProcessError as e:
-        print(f"  ✗ Command failed: {cmd!r}")
+        print(f"  ✗ Command failed: {' '.join(str(part) for part in cmd)}")
         if e.stderr:
             # Show only last 5 lines of stderr to avoid wall of text
             lines = e.stderr.strip().split("\n")
