@@ -14,7 +14,7 @@ from datetime import datetime
 from ultralytics import YOLO
 
 from coastal_alpine_core.telemetry import TelemetryTracker
-from coastal_alpine_core.flywheel import DataFlywheel, Trajectory
+from coastal_alpine_core import DataFlywheel, Trajectory
 
 flywheel = DataFlywheel(storage_path="flywheel_sting_operation.jsonl")
 
@@ -72,8 +72,8 @@ def run_local_inference(source, model_path=None, conf=0.25, save=True, device=""
             action="local_yolo_inference",
             input_summary=f"Source: {source}",
             output_summary=f"Detections: {total_detections}, Avg Conf: {avg_conf:.2f}",
-            outcome="success" if total_detections >= 0 else "no_detection",
-            latency_seconds=0.0,
+            outcome="success" if total_detections > 0 else "no_detection",
+            latency_seconds=round(time.perf_counter() - measurement["start"], 4),
             estimated_energy_joules=0.0,
             metadata={
                 "model_path": model_path,
@@ -88,11 +88,17 @@ def run_local_inference(source, model_path=None, conf=0.25, save=True, device=""
 
     TelemetryTracker.complete_measurement(measurement, include_system_metrics=True)
 
-    # Original summary printing logic (kept for CLI usability)
     print("\n=== Local YOLO Detection Summary ===")
     for result in results:
-        # ... (existing printing logic remains unchanged) ...
-        pass
+        if result.boxes is None or len(result.boxes) == 0:
+            print(f"{os.path.basename(str(result.path))}: no objects detected")
+            continue
+        class_counts = {}
+        for box in result.boxes:
+            cls_name = result.names.get(int(box.cls[0]), "unknown")
+            class_counts[cls_name] = class_counts.get(cls_name, 0) + 1
+        summary = ", ".join(f"{count} {name}(s)" for name, count in class_counts.items())
+        print(f"{os.path.basename(str(result.path))}: {summary}")
 
     return results
 
@@ -110,7 +116,7 @@ def load_env_key():
         with open(env_path, 'r') as f:
             for line in f:
                 if line.startswith("ROBOFLOW_API_KEY="):
-                    return line.strip().split("=")[1]
+                    return line.strip().split("=", 1)[1]
     return None
 
 
