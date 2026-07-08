@@ -1,6 +1,6 @@
 # Sting Operation AI: Bee and Wasp Detection
 
-[![CI](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/secops.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/secops.yml)
+[![CI](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci-scan.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci-scan.yml)
 [![RedTeam](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/redteam.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/redteam.yml)
 
 ![Sting Operation AI Banner](assets/social_preview.png)
