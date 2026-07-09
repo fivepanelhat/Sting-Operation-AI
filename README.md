@@ -228,7 +228,6 @@ Sting-Operation-AI/
 - [Edge AI & IoT Hardware Setup Guide](./docs/)
 - [ARCHITECTURE.md](./ARCHITECTURE.md) — Detailed system design
 - [CHANGELOG.md](./CHANGELOG.md) — Version history
-- [DEVELOPMENT.md](./DEVELOPMENT.md) — Contribution guidelines
 
 ---
 
