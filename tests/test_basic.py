@@ -1,6 +1,5 @@
 """Lightweight unit tests — no GPU / model download required."""
 
-import os
 import sys
 from pathlib import Path
 

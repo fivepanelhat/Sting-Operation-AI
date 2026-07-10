@@ -22,7 +22,10 @@ if str(_ROOT) not in sys.path:
 
 from src.flywheel_util import rotate_flywheel_if_needed  # noqa: E402
 from src.inference import StingInferenceEngine  # noqa: E402
-from src.model_paths import find_best_model  # noqa: E402
+from src.model_paths import find_best_model as find_best_model  # re-export for CLI/tools  # noqa: E402
+
+# Re-export for callers/tests
+__all_reexport = find_best_model
 
 # Module-level engine cache (warm weights across repeated CLI use in process)
 _ENGINE: StingInferenceEngine | None = None
