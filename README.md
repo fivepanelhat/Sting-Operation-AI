@@ -1,23 +1,21 @@
 # Sting Operation AI: Bee and Wasp Detection
 
-[![CI](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci-scan.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci-scan.yml)
-[![RedTeam](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/redteam.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/redteam.yml)
-
 ![Sting Operation AI Banner](assets/social_preview.png)
 
 **Coastal Alpine Tech Limited**  
 *Edge AI | Sovereign Systems | Practical Intelligence*
 
 [![License](https://img.shields.io/badge/License-Proprietary--Commercial-blue?style=flat-square)](LICENSE)  
-[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)  
-![Hardware Target](https://img.shields.io/badge/Hardware-Raspberry%20Pi%205%2016GB-C11A5B?style=flat-square&logo=raspberry-pi&logoColor=white)  
-![NPU Acceleration](https://img.shields.io/badge/NPU-Hailo--10H%20Accelerated-005A9C?style=flat-square)  
-![Sovereignty](https://img.shields.io/badge/Sovereignty-NZ%20Data%20Bound-00247D?style=flat-square)  
-[![CI/CD: Active](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci.yml/badge.svg)](https://github.com/fivepanelhat/Sting-Operation-AI/actions)  
+[![Python: 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue?style=flat-square)](https://www.python.org/)  
+[![Hardware Target](https://img.shields.io/badge/Hardware-Raspberry%20Pi%205%2016GB-C11A5B?style=flat-square&logo=raspberry-pi&logoColor=white)]()  
+[![NPU Acceleration](https://img.shields.io/badge/NPU-Hailo--10H%20Accelerated-005A9C?style=flat-square)]()  
+[![Sovereignty](https://img.shields.io/badge/Sovereignty-NZ%20Data%20Bound-00247D?style=flat-square)]()  
+[![CI](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci-scan.yml/badge.svg?branch=main)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/ci-scan.yml)  
 [![SecOps Scan](https://img.shields.io/github/actions/workflow/status/fivepanelhat/Sting-Operation-AI/secops.yml?branch=main&label=SecOps%20Scan&style=flat-square&color=success)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/secops.yml)  
 [![RedTeam](https://img.shields.io/github/actions/workflow/status/fivepanelhat/Sting-Operation-AI/redteam.yml?branch=main&label=RedTeam&style=flat-square&color=critical)](https://github.com/fivepanelhat/Sting-Operation-AI/actions/workflows/redteam.yml)  
-![Dependabot](https://img.shields.io/badge/Dependencies-Monitored-brightgreen?style=flat-square&logo=dependabot)  
-![Sustainability](https://img.shields.io/badge/EECA%20NZ-Carbon%20Tracked-green?style=flat-square)
+[![Dependabot](https://img.shields.io/badge/Dependencies-Monitored-brightgreen?style=flat-square&logo=dependabot)]()  
+[![Interop](https://img.shields.io/badge/Interop-MQTT%20%7C%20OPC--UA-orange?style=flat-square)]()  
+[![Sustainability](https://img.shields.io/badge/EECA%20NZ-Carbon%20Tracked-green?style=flat-square)]()
 
 Object detection system for protecting beehives by identifying honeybees versus invasive wasps using YOLO models and edge AI.
 
