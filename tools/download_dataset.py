@@ -176,15 +176,16 @@ def main():
     print("\nCleaning up temporary download directory...")
     shutil.rmtree(temp_download_dir)
 
-    # 8. Save API key to .env if the user wants
-    env_file = os.path.join(base_dir, ".env")
-    if not os.path.exists(env_file):
-        try:
-            with open(env_file, "w") as f:
-                f.write(f"ROBOFLOW_API_KEY={api_key}\n")
-            print("Saved API Key to .env file for local inference.")
-        except Exception as e:
-            print(f"Could not save API Key to .env: {e}")
+    # 8. Never persist API keys to disk (CodeQL py/clear-text-storage-sensitive-data).
+    #    Operators must set ROBOFLOW_API_KEY in the environment or a local .env that
+    #    they create manually (already gitignored). Do not write secrets from this tool.
+    if not os.environ.get("ROBOFLOW_API_KEY"):
+        print(
+            "\nSecurity: API key was provided interactively and was NOT written to disk."
+        )
+        print(
+            "For subsequent runs, export ROBOFLOW_API_KEY or create a local .env yourself."
+        )
 
     # 9. Verify setup
     print("\nRunning verification...")
