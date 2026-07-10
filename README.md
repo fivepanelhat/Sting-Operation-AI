@@ -133,25 +133,73 @@ python predict.py data/images/val/
 
 ## Architecture Overview
 
+Sting Operation protects hives with **real-time bee vs wasp vision** on the edge. YOLO detection runs on **Hailo-10H**; higher-level decisions use local Ollama on **RPi 5 16GB** — no cloud video upload.
+
+![Sting Operation architecture — liquid glass overview](assets/architecture_overview.png)
+
+### System map
+
 ```mermaid
-flowchart TD
-    A["Input Images/Video"] --> B["YOLO Object Detection"]
-    B --> C["Class Mapping<br/>(Bee=0, Wasp=1, Hornet=2)"]
-    C --> D["Edge Inference<br/>(RPi + Hailo-10H)"]
-    D --> E["LangGraph / Ollama Reasoning"]
-    E --> F["Actions<br/>(Alerts, Servo Tracking, Relays)"]
-    
-    subgraph "Data Sovereignty"
-        B
-        D
+%%{init: {
+  "theme": "dark",
+  "themeVariables": {
+    "fontSize": "16px",
+    "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+    "primaryColor": "#0ea5e9",
+    "primaryTextColor": "#f8fafc",
+    "primaryBorderColor": "#38bdf8",
+    "lineColor": "#67e8f9",
+    "secondaryColor": "#1e293b",
+    "tertiaryColor": "#0f172a",
+    "clusterBkg": "#0b1220cc",
+    "clusterBorder": "#38bdf880",
+    "titleColor": "#e2e8f0"
+  },
+  "flowchart": {
+    "nodeSpacing": 40,
+    "rankSpacing": 48,
+    "padding": 20,
+    "htmlLabels": true,
+    "curve": "basis"
+  }
+}}%%
+flowchart TB
+
+    classDef sense fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#f0fdf4
+    classDef edge fill:#0c4a6e,stroke:#38bdf8,stroke-width:2px,color:#f0f9ff
+    classDef core fill:#134e4a,stroke:#2dd4bf,stroke-width:2px,color:#f0fdfa
+    classDef act fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#fffbeb
+    classDef store fill:#1e1b4b,stroke:#a5b4fc,stroke-width:2px,color:#eef2ff
+    classDef ai fill:#3b0764,stroke:#e879f9,stroke-width:2px,color:#fdf4ff
+    classDef app fill:#1e1b4b,stroke:#c4b5fd,stroke-width:2px,color:#eef2ff
+
+    CAM["CSI / stream video"] --> YOLO["YOLO detection<br/>bee · wasp · hornet"]
+    YOLO --> HEF["Hailo-10H NPU<br/>HEF / INT8 inference"]
+    HEF --> MAP["Class mapping & tracks"]
+    MAP --> LLM["Optional Ollama reasoning<br/>event logging"]
+    MAP --> ACT["Actions<br/>alerts · servo · relays"]
+
+    subgraph EDGE["Sovereign edge — RPi 5 16GB + Hailo-10H"]
+        YOLO
+        HEF
+        MAP
+        LLM
     end
-    
-    style D fill:#4ade80,stroke:#166534
+
+    class CAM sense
+    class YOLO,MAP core
+    class HEF,LLM ai
+    class ACT act
 ```
 
-*For full details, see [docs/](./docs/) and Edge AI Hardware Guide.*
+| Layer | Components | Role |
+| :--- | :--- | :--- |
+| **Vision** | YOLO multi-class | Bee / wasp / hornet |
+| **NPU** | Hailo-10H 40 TOPS | Real-time edge FPS |
+| **Reasoning** | Ollama optional | Event narrative / logs |
+| **Actuation** | Alerts · servo · relays | Hive protection loop |
 
----
+*Full detail: [ARCHITECTURE.md](./ARCHITECTURE.md) · [docs/](./docs/)*
 
 ## Directory Structure
 
