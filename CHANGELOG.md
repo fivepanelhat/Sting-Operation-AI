@@ -1,3 +1,19 @@
+# Changelog
+
+## [1.3.0] - 2026-07-10
+
+### Changed
+- Edge inference engine in `src/inference.py` with YOLO cache, device auto-select, wasp alert flag.
+- `predict.py` reuses a warm `StingInferenceEngine`; directory inference without reloading weights.
+- Hailo NPU optional (`STING_PREFER_HAILO` / `STING_HEF_PATH`) with clear fallback to YOLO.
+- Flywheel JSONL rotation for SD-card safety.
+- Training defaults: workers/cache/AMP tuned for lab vs CPU.
+- Expanded unit tests (no GPU download required for core helpers).
+
+### Fixed
+- Import-time crash when `hailo_platform` is absent (common on dev workstations).
+
+---
 # Sting Operation AI Changelog
 
 All notable changes to the `Sting-Operation-AI` repository will be documented in this file.

@@ -139,6 +139,8 @@ def main():
     # 3. Load and train model
     try:
         model = YOLO(args.model)
+        # Edge/lab training defaults: cache labels, modest workers, AMP on CUDA
+        workers = int(os.environ.get("STING_TRAIN_WORKERS", "2" if device == "cpu" else "4"))
         model.train(
             data=args.data,
             epochs=args.epochs,
@@ -146,6 +148,10 @@ def main():
             project=args.project,
             name=args.name,
             device=device,
+            workers=workers,
+            cache=os.environ.get("STING_TRAIN_CACHE", "ram" if device != "cpu" else False),
+            amp=device != "cpu",
+            exist_ok=True,
         )
         print(
             f"\nTraining completed successfully! Results saved under {os.path.join(args.project, args.name)}"

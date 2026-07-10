@@ -47,3 +47,16 @@ datasets/
 # Python/Edge specific
 *.log
 
+# Flywheel / runtime telemetry (edge data — do not commit)
+flywheel_*.jsonl
+runs/
+
+# Training artefacts (keep weights only if force-added)
+models/trained_models/**/train_batch*.jpg
+models/trained_models/**/results.csv
+models/trained_models/**/args.yaml
+models/trained_models/**/*.png
+
+# Dataset visualisations can be huge
+data/visualizations/
+
