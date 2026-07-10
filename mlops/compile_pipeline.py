@@ -15,7 +15,7 @@ def run_quantization_pipeline(
 ):
     """
     Automates the local translation, optimization, and INT8 quantization of raw
-    AI models directly for the physical Hailo-10L NPU architecture.
+    AI models directly for the physical Hailo-10H NPU architecture.
     """
     print(f"[MLOPS] Commencing compilation of model target: {onnx_model_path}")
 
