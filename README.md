@@ -2,7 +2,7 @@
 
 ![Sting Operation AI Banner](assets/social_preview.png)
 
-**Coastal Alpine Tech Limited**  
+**Coastal Alpine Tech Limited** — pre-seed startup, New Plymouth, Taranaki, Aotearoa New Zealand.
 *Edge AI | Sovereign Systems | Practical Intelligence*
 
 
@@ -132,6 +132,8 @@ python predict.py data/images/val/
 ---
 
 ## Architecture Overview
+
+> **Diagrams:** Architecture images and Mermaid maps describe the **target product architecture** for this pre-seed stack. They are engineering design maps — not claims of large-scale commercial fleet deployment.
 
 Sting Operation protects hives with **real-time bee vs wasp vision** on the edge. YOLO detection runs on **Hailo-10H**; higher-level decisions use local Ollama on **RPi 5 16GB** — no cloud video upload.
 
