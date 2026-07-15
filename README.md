@@ -8,12 +8,12 @@
 [![HITL](https://img.shields.io/badge/HITL-Draft%2FPrepare%20only-dc2626)](./.github/agent-fleet/AGENTS.md)
 [![Te Mana Raraunga](https://img.shields.io/badge/Te%20Mana%20Raraunga-Aligned-0f766e)](https://github.com/fivepanelhat/fivepanelhat)
 
-**Part of the [Kiwi Edge AI Stack](https://github.com/fivepanelhat/fivepanelhat)** · Founder OS: [NZ-Start-Up](https://github.com/fivepanelhat/NZ-Start-Up) · Agent policy: [`.github/agent-fleet/`](./.github/agent-fleet/)
+**Part of the [Kiwi Edge AI Stack](https://github.com/fivepanelhat/fivepanelhat)** | Founder OS: [NZ-Start-Up](https://github.com/fivepanelhat/NZ-Start-Up) | Agent policy: [`.github/agent-fleet/`](./.github/agent-fleet/)
 
-> Sovereign hybrid edge AI for NZ farms & founders — local-first + multi-model, Te Mana Raraunga aligned — collaborating with Venture Taranaki, startups.com investors & Kotahitanga Investment Fund (HITL + cultural advisory for formal approaches).
+> Sovereign hybrid edge AI for NZ farms and founders - local-first + multi-model, Te Mana Raraunga aligned - collaborating with Venture Taranaki, startups.com investors and Kotahitanga Investment Fund (HITL + cultural advisory for formal approaches).
 
 **Agents inform, draft, prepare, monitor, and remind. Humans advise, sign, file, send, and pay.**  
-Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.github/agent-fleet/anti-hallucination.md) · Congruence: [`CAT_CONGRUENCE.md`](./CAT_CONGRUENCE.md)
+Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.github/agent-fleet/anti-hallucination.md) | Congruence: [`CAT_CONGRUENCE.md`](./CAT_CONGRUENCE.md)
 <!-- END CAT_CONGRUENCE_SNIPPET -->
 
 
@@ -42,7 +42,7 @@ Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.gith
 
 ![Sting Operation AI Banner](assets/social_preview.png)
 
-**Coastal Alpine Tech Limited** â€” pre-seed startup, New Plymouth, Taranaki, Aotearoa New Zealand.
+**Coastal Alpine Tech Limited**  pre-seed startup, New Plymouth, Taranaki, Aotearoa New Zealand.
 *Edge AI | Sovereign Systems | Practical Intelligence*
 
 
@@ -66,9 +66,9 @@ The problem we are solving is the accurate real-time detection and differentiati
 
 Additional challenges addressed:
 
-1. **Invasive Species Threat** â€” German wasps (*Vespula germanica*) and Yellow-legged hornets (*Vespa velutina*) threaten honeybee populations.
-2. **Labeling and Training Accuracy** â€” Incorrect class mappings and limited datasets reduce model reliability, especially for wasp detection.
-3. **Edge Deployment Constraints** â€” Traditional cloud-based vision systems introduce latency and privacy risks in remote apiaries.
+1. **Invasive Species Threat**  German wasps (*Vespula germanica*) and Yellow-legged hornets (*Vespa velutina*) threaten honeybee populations.
+2. **Labeling and Training Accuracy**  Incorrect class mappings and limited datasets reduce model reliability, especially for wasp detection.
+3. **Edge Deployment Constraints**  Traditional cloud-based vision systems introduce latency and privacy risks in remote apiaries.
 
 ---
 
@@ -173,11 +173,11 @@ python predict.py data/images/val/
 
 ## Architecture Overview
 
-> **Diagrams:** Architecture images and Mermaid maps describe the **target product architecture** for this pre-seed stack. They are engineering design maps â€” not claims of large-scale commercial fleet deployment.
+> **Diagrams:** Architecture images and Mermaid maps describe the **target product architecture** for this pre-seed stack. They are engineering design maps  not claims of large-scale commercial fleet deployment.
 
-Sting Operation protects hives with **real-time bee vs wasp vision** on the edge. YOLO detection runs on **Hailo-10H**; higher-level decisions use local Ollama on **RPi 5 16GB** â€” no cloud video upload.
+Sting Operation protects hives with **real-time bee vs wasp vision** on the edge. YOLO detection runs on **Hailo-10H**; higher-level decisions use local Ollama on **RPi 5 16GB**  no cloud video upload.
 
-![Sting Operation architecture â€” liquid glass overview](assets/architecture_overview.png)
+![Sting Operation architecture  liquid glass overview](assets/architecture_overview.png)
 
 ### System map
 
@@ -215,13 +215,13 @@ flowchart TB
     classDef ai fill:#3b0764,stroke:#e879f9,stroke-width:2px,color:#fdf4ff
     classDef app fill:#1e1b4b,stroke:#c4b5fd,stroke-width:2px,color:#eef2ff
 
-    CAM["CSI / stream video"] --> YOLO["YOLO detection<br/>bee Â· wasp Â· hornet"]
+    CAM["CSI / stream video"] --> YOLO["YOLO detection<br/>bee | wasp | hornet"]
     YOLO --> HEF["Hailo-10H NPU<br/>HEF / INT8 inference"]
     HEF --> MAP["Class mapping & tracks"]
     MAP --> LLM["Optional Ollama reasoning<br/>event logging"]
-    MAP --> ACT["Actions<br/>alerts Â· servo Â· relays"]
+    MAP --> ACT["Actions<br/>alerts | servo | relays"]
 
-    subgraph EDGE["Sovereign edge â€” RPi 5 16GB + Hailo-10H"]
+    subgraph EDGE["Sovereign edge  RPi 5 16GB + Hailo-10H"]
         YOLO
         HEF
         MAP
@@ -234,28 +234,28 @@ flowchart TB
     class ACT act
 ```
 
-| Layer | Components | Role |
-| :--- | :--- | :--- |
-| **Vision** | YOLO multi-class | Bee / wasp / hornet |
-| **NPU** | Hailo-10H 40 TOPS | Real-time edge FPS |
-| **Reasoning** | Ollama optional | Event narrative / logs |
-| **Actuation** | Alerts Â· servo Â· relays | Hive protection loop |
+ | Layer | Components | Role |
+ | :--- | :--- | :--- |
+ | **Vision** | YOLO multi-class | Bee / wasp / hornet |
+ | **NPU** | Hailo-10H 40 TOPS | Real-time edge FPS |
+ | **Reasoning** | Ollama optional | Event narrative / logs |
+ | **Actuation** | Alerts | servo | relays | Hive protection loop |
 
-*Full detail: [ARCHITECTURE.md](./ARCHITECTURE.md) Â· [docs/](./docs/)*
+*Full detail: [ARCHITECTURE.md](./ARCHITECTURE.md) | [docs/](./docs/)*
 
 ## Directory Structure
 
 ```bash
 Sting-Operation-AI/
-â”œâ”€â”€ config/              # data.yaml and configurations
-â”œâ”€â”€ data/                # images, labels, raw annotations
-â”œâ”€â”€ models/              # base_weights and trained_models
-â”œâ”€â”€ tools/               # tidy_and_fix.py, verify_setup.py
-â”œâ”€â”€ predict.py
-â”œâ”€â”€ train.py
-â”œâ”€â”€ setup_project.bat
-â”œâ”€â”€ .github/workflows/   # CI/CD
-â””â”€â”€ README.md
+â"œâ"€â"€ config/              # data.yaml and configurations
+â"œâ"€â"€ data/                # images, labels, raw annotations
+â"œâ"€â"€ models/              # base_weights and trained_models
+â"œâ"€â"€ tools/               # tidy_and_fix.py, verify_setup.py
+â"œâ"€â"€ predict.py
+â"œâ"€â"€ train.py
+â"œâ"€â"€ setup_project.bat
+â"œâ"€â"€ .github/workflows/   # CI/CD
+â""â"€â"€ README.md
 ```
 
 ---
@@ -264,14 +264,14 @@ Sting-Operation-AI/
 
 ### Hardware
 
-- Raspberry Pi 5 + Hailo-10H NPU  
+- Raspberry Pi 5 + Hailo-10H NPU
 - Camera modules and potential servo/relay actuators
 
 ### Software
 
-- **Detection:** Ultralytics YOLO  
-- **Orchestration:** Local scripts with optional LangGraph / Ollama  
-- **Dataset:** Roboflow integration  
+- **Detection:** Ultralytics YOLO
+- **Orchestration:** Local scripts with optional LangGraph / Ollama
+- **Dataset:** Roboflow integration
 - **Deployment:** Edge-ready with systemd/Docker support
 
 ---
@@ -303,18 +303,18 @@ Sting-Operation-AI/
 ## Documentation
 
 - [Edge AI & IoT Hardware Setup Guide](./docs/)
-- [ARCHITECTURE.md](./ARCHITECTURE.md) â€” Detailed system design
-- [CHANGELOG.md](./CHANGELOG.md) â€” Version history
+- [ARCHITECTURE.md](./ARCHITECTURE.md)  Detailed system design
+- [CHANGELOG.md](./CHANGELOG.md)  Version history
 
 ---
 
 ## License
 
-This project is licensed under the Coastal Alpine Tech Limited License â€” see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the Coastal Alpine Tech Limited License  see the [LICENSE](./LICENSE) file for details.
 
 ---
 
-**Built with focus on data sovereignty and edge intelligence.**  
+**Built with focus on data sovereignty and edge intelligence.**
 Questions or collaboration? Contact Coastal Alpine Tech Limited.
 
 ---
