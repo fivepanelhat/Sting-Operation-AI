@@ -12,10 +12,9 @@
 
 > Sovereign hybrid edge AI for NZ farms and founders - local-first + multi-model, Te Mana Raraunga aligned - collaborating with Venture Taranaki, startups.com investors and Kotahitanga Investment Fund (HITL + cultural advisory for formal approaches).
 
-**Agents inform, draft, prepare, monitor, and remind. Humans advise, sign, file, send, and pay.**  
+**Agents inform, draft, prepare, monitor, and remind. Humans advise, sign, file, send, and pay.** 
 Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.github/agent-fleet/anti-hallucination.md) | Congruence: [`CAT_CONGRUENCE.md`](./CAT_CONGRUENCE.md)
 <!-- END CAT_CONGRUENCE_SNIPPET -->
-
 
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary--Commercial-blue.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org)
@@ -42,9 +41,8 @@ Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.gith
 
 ![Sting Operation AI Banner](assets/social_preview.png)
 
-**Coastal Alpine Tech Limited**  pre-seed startup, New Plymouth, Taranaki, Aotearoa New Zealand.
+**Coastal Alpine Tech Limited** pre-seed startup, New Plymouth, Taranaki, Aotearoa New Zealand.
 *Edge AI | Sovereign Systems | Practical Intelligence*
-
 
 Object detection system for protecting beehives by identifying honeybees versus invasive wasps using YOLO models and edge AI.
 
@@ -66,9 +64,9 @@ The problem we are solving is the accurate real-time detection and differentiati
 
 Additional challenges addressed:
 
-1. **Invasive Species Threat**  German wasps (*Vespula germanica*) and Yellow-legged hornets (*Vespa velutina*) threaten honeybee populations.
-2. **Labeling and Training Accuracy**  Incorrect class mappings and limited datasets reduce model reliability, especially for wasp detection.
-3. **Edge Deployment Constraints**  Traditional cloud-based vision systems introduce latency and privacy risks in remote apiaries.
+1. **Invasive Species Threat** German wasps (*Vespula germanica*) and Yellow-legged hornets (*Vespa velutina*) threaten honeybee populations.
+2. **Labeling and Training Accuracy** Incorrect class mappings and limited datasets reduce model reliability, especially for wasp detection.
+3. **Edge Deployment Constraints** Traditional cloud-based vision systems introduce latency and privacy risks in remote apiaries.
 
 ---
 
@@ -113,7 +111,7 @@ python bootstrap.py
 ### Manual Installation
 
 <details open>
-<summary><strong>ðŸ§ Linux / macOS (Bash)</strong></summary>
+<summary><strong> Linux / macOS (Bash)</strong></summary>
 
 ```bash
 git clone https://github.com/fivepanelhat/Sting-Operation-AI.git
@@ -126,13 +124,13 @@ source venv/bin/activate
 pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
-cp .env.example .env   # If applicable
+cp .env.example .env # If applicable
 ```
 
 </details>
 
 <details>
-<summary><strong>ðŸªŸ Windows (PowerShell)</strong></summary>
+<summary><strong> Windows (PowerShell)</strong></summary>
 
 ```powershell
 git clone https://github.com/fivepanelhat/Sting-Operation-AI.git
@@ -145,7 +143,7 @@ python -m venv venv
 pip install git+https://github.com/fivepanelhat/coastal-alpine-core.git
 pip install -r requirements.txt
 pip install -r requirements-dev.txt
-Copy-Item .env.example .env   # If applicable
+Copy-Item .env.example .env # If applicable
 ```
 
 > **Note:** If you receive an execution policy error, run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` first.
@@ -173,65 +171,65 @@ python predict.py data/images/val/
 
 ## Architecture Overview
 
-> **Diagrams:** Architecture images and Mermaid maps describe the **target product architecture** for this pre-seed stack. They are engineering design maps  not claims of large-scale commercial fleet deployment.
+> **Diagrams:** Architecture images and Mermaid maps describe the **target product architecture** for this pre-seed stack. They are engineering design maps not claims of large-scale commercial fleet deployment.
 
-Sting Operation protects hives with **real-time bee vs wasp vision** on the edge. YOLO detection runs on **Hailo-10H**; higher-level decisions use local Ollama on **RPi 5 16GB**  no cloud video upload.
+Sting Operation protects hives with **real-time bee vs wasp vision** on the edge. YOLO detection runs on **Hailo-10H**; higher-level decisions use local Ollama on **RPi 5 16GB** no cloud video upload.
 
-![Sting Operation architecture  liquid glass overview](assets/architecture_overview.png)
+![Sting Operation architecture liquid glass overview](assets/architecture_overview.png)
 
 ### System map
 
 ```mermaid
 %%{init: {
-  "theme": "dark",
-  "themeVariables": {
-    "fontSize": "16px",
-    "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
-    "primaryColor": "#0ea5e9",
-    "primaryTextColor": "#f8fafc",
-    "primaryBorderColor": "#38bdf8",
-    "lineColor": "#67e8f9",
-    "secondaryColor": "#1e293b",
-    "tertiaryColor": "#0f172a",
-    "clusterBkg": "#0b1220cc",
-    "clusterBorder": "#38bdf880",
-    "titleColor": "#e2e8f0"
-  },
-  "flowchart": {
-    "nodeSpacing": 40,
-    "rankSpacing": 48,
-    "padding": 20,
-    "htmlLabels": true,
-    "curve": "basis"
-  }
+ "theme": "dark",
+ "themeVariables": {
+ "fontSize": "16px",
+ "fontFamily": "Inter, ui-sans-serif, system-ui, sans-serif",
+ "primaryColor": "#0ea5e9",
+ "primaryTextColor": "#f8fafc",
+ "primaryBorderColor": "#38bdf8",
+ "lineColor": "#67e8f9",
+ "secondaryColor": "#1e293b",
+ "tertiaryColor": "#0f172a",
+ "clusterBkg": "#0b1220cc",
+ "clusterBorder": "#38bdf880",
+ "titleColor": "#e2e8f0"
+ },
+ "flowchart": {
+ "nodeSpacing": 40,
+ "rankSpacing": 48,
+ "padding": 20,
+ "htmlLabels": true,
+ "curve": "basis"
+ }
 }}%%
 flowchart TB
 
-    classDef sense fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#f0fdf4
-    classDef edge fill:#0c4a6e,stroke:#38bdf8,stroke-width:2px,color:#f0f9ff
-    classDef core fill:#134e4a,stroke:#2dd4bf,stroke-width:2px,color:#f0fdfa
-    classDef act fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#fffbeb
-    classDef store fill:#1e1b4b,stroke:#a5b4fc,stroke-width:2px,color:#eef2ff
-    classDef ai fill:#3b0764,stroke:#e879f9,stroke-width:2px,color:#fdf4ff
-    classDef app fill:#1e1b4b,stroke:#c4b5fd,stroke-width:2px,color:#eef2ff
+ classDef sense fill:#052e16,stroke:#4ade80,stroke-width:2px,color:#f0fdf4
+ classDef edge fill:#0c4a6e,stroke:#38bdf8,stroke-width:2px,color:#f0f9ff
+ classDef core fill:#134e4a,stroke:#2dd4bf,stroke-width:2px,color:#f0fdfa
+ classDef act fill:#422006,stroke:#fbbf24,stroke-width:2px,color:#fffbeb
+ classDef store fill:#1e1b4b,stroke:#a5b4fc,stroke-width:2px,color:#eef2ff
+ classDef ai fill:#3b0764,stroke:#e879f9,stroke-width:2px,color:#fdf4ff
+ classDef app fill:#1e1b4b,stroke:#c4b5fd,stroke-width:2px,color:#eef2ff
 
-    CAM["CSI / stream video"] --> YOLO["YOLO detection<br/>bee | wasp | hornet"]
-    YOLO --> HEF["Hailo-10H NPU<br/>HEF / INT8 inference"]
-    HEF --> MAP["Class mapping & tracks"]
-    MAP --> LLM["Optional Ollama reasoning<br/>event logging"]
-    MAP --> ACT["Actions<br/>alerts | servo | relays"]
+ CAM["CSI / stream video"] --> YOLO["YOLO detection<br/>bee | wasp | hornet"]
+ YOLO --> HEF["Hailo-10H NPU<br/>HEF / INT8 inference"]
+ HEF --> MAP["Class mapping & tracks"]
+ MAP --> LLM["Optional Ollama reasoning<br/>event logging"]
+ MAP --> ACT["Actions<br/>alerts | servo | relays"]
 
-    subgraph EDGE["Sovereign edge  RPi 5 16GB + Hailo-10H"]
-        YOLO
-        HEF
-        MAP
-        LLM
-    end
+ subgraph EDGE["Sovereign edge RPi 5 16GB + Hailo-10H"]
+ YOLO
+ HEF
+ MAP
+ LLM
+ end
 
-    class CAM sense
-    class YOLO,MAP core
-    class HEF,LLM ai
-    class ACT act
+ class CAM sense
+ class YOLO,MAP core
+ class HEF,LLM ai
+ class ACT act
 ```
 
  | Layer | Components | Role |
@@ -247,15 +245,15 @@ flowchart TB
 
 ```bash
 Sting-Operation-AI/
-â"œâ"€â"€ config/              # data.yaml and configurations
-â"œâ"€â"€ data/                # images, labels, raw annotations
-â"œâ"€â"€ models/              # base_weights and trained_models
-â"œâ"€â"€ tools/               # tidy_and_fix.py, verify_setup.py
-â"œâ"€â"€ predict.py
-â"œâ"€â"€ train.py
-â"œâ"€â"€ setup_project.bat
-â"œâ"€â"€ .github/workflows/   # CI/CD
-â""â"€â"€ README.md
+|-- config/ # data.yaml and configurations
+|-- data/ # images, labels, raw annotations
+|-- models/ # base_weights and trained_models
+|-- tools/ # tidy_and_fix.py, verify_setup.py
+|-- predict.py
+|-- train.py
+|-- setup_project.bat
+|-- .github/workflows/ # CI/CD
+-- README.md
 ```
 
 ---
@@ -303,14 +301,14 @@ Sting-Operation-AI/
 ## Documentation
 
 - [Edge AI & IoT Hardware Setup Guide](./docs/)
-- [ARCHITECTURE.md](./ARCHITECTURE.md)  Detailed system design
-- [CHANGELOG.md](./CHANGELOG.md)  Version history
+- [ARCHITECTURE.md](./ARCHITECTURE.md) Detailed system design
+- [CHANGELOG.md](./CHANGELOG.md) Version history
 
 ---
 
 ## License
 
-This project is licensed under the Coastal Alpine Tech Limited License  see the [LICENSE](./LICENSE) file for details.
+This project is licensed under the Coastal Alpine Tech Limited License see the [LICENSE](./LICENSE) file for details.
 
 ---
 

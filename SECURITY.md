@@ -1,4 +1,4 @@
-# Security Policy — Sting-Operation-AI
+# Security Policy - Sting-Operation-AI
 
 Edge vision / wasp detection workloads for Coastal Alpine Tech.
 

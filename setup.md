@@ -7,11 +7,11 @@ This guide details the system prerequisites required before installing Sting-Ope
 ### Prerequisites
 1. **Python 3.10+**: Make sure Python and its virtual environment modules are installed.
 2. **System Dependencies**:
-   ```bash
-   sudo apt-get update
-   sudo apt-get install -y python3-dev python3-venv python3-pip git build-essential
-   sudo apt-get install -y libgl1 libglib2.0-0
-   ```
+ ```bash
+ sudo apt-get update
+ sudo apt-get install -y python3-dev python3-venv python3-pip git build-essential
+ sudo apt-get install -y libgl1 libglib2.0-0
+ ```
 
 ---
 

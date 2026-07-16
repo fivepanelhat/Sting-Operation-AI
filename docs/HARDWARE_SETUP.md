@@ -12,26 +12,26 @@ The following diagram illustrates the hardware connections and data flow:
 
 ```mermaid
 graph TD
-    %% Inputs
-    C["CSI Camera Module 3"] -->|Video Frames| Pi["Raspberry Pi 5"]
-    S["DHT22 / Microphones"] -->|Sensor Data| Pi
-    
-    %% NPU Acceleration
-    Pi -->|Image Data PCIe| H["Hailo-10H NPU / AI Kit"]
-    H -->|Bounding Boxes 30+ FPS| Pi
-    
-    %% Local Reasoning
-    Pi -->|Event Trigger| Ol["Ollama / Gemma 2B"]
-    Ol -->|Reasoning & Log| Pi
-    
-    %% Outputs / Actuators
-    Pi -->|PWM Control| G["Pan/Tilt Servo Gimbal"]
-    Pi -->|Relay Trigger| Z["Zapping Laser / Grid"]
-    
-    %% Styling
-    style Pi fill:#c2185b,stroke:#880e4f,stroke-width:2px,color:#fff
-    style H fill:#00c853,stroke:#003300,stroke-width:2px,color:#fff
-    style Ol fill:#0288d1,stroke:#01579b,stroke-width:2px,color:#fff
+ %% Inputs
+ C["CSI Camera Module 3"] -->|Video Frames| Pi["Raspberry Pi 5"]
+ S["DHT22 / Microphones"] -->|Sensor Data| Pi
+ 
+ %% NPU Acceleration
+ Pi -->|Image Data PCIe| H["Hailo-10H NPU / AI Kit"]
+ H -->|Bounding Boxes 30+ FPS| Pi
+ 
+ %% Local Reasoning
+ Pi -->|Event Trigger| Ol["Ollama / Gemma 2B"]
+ Ol -->|Reasoning & Log| Pi
+ 
+ %% Outputs / Actuators
+ Pi -->|PWM Control| G["Pan/Tilt Servo Gimbal"]
+ Pi -->|Relay Trigger| Z["Zapping Laser / Grid"]
+ 
+ %% Styling
+ style Pi fill:#c2185b,stroke:#880e4f,stroke-width:2px,color:#fff
+ style H fill:#00c853,stroke:#003300,stroke-width:2px,color:#fff
+ style Ol fill:#0288d1,stroke:#01579b,stroke-width:2px,color:#fff
 ```
 
 ---
@@ -58,15 +58,15 @@ graph TD
 
 1. **Install Active Cooler**: Apply thermal pads (included) to the Pi 5 chips, place the Active Cooler heatsink on top, and push down the two locking pins until they click. Connect the fan cable to the dedicated 4-pin fan connector.
 2. **Mount the M.2 HAT+**:
-   - Insert the M.2 HAT+ ribbon cable into the PCIe slot of the Pi 5 and lock the connector tab.
-   - Use the included spacers and screws to secure the M.2 HAT+ board above the Pi 5.
+ - Insert the M.2 HAT+ ribbon cable into the PCIe slot of the Pi 5 and lock the connector tab.
+ - Use the included spacers and screws to secure the M.2 HAT+ board above the Pi 5.
 3. **Insert the Hailo-10H Card**: Insert the M.2 M-key Hailo module into the slot on the HAT+ at a 30-degree angle, press down, and secure it using the small mounting screw.
 4. **Connect the CSI Camera**: Insert the thin camera ribbon cable into the CAM0 or CAM1 connector on the Pi 5 and secure the locking tab.
 5. **Gimbal & Relay Wiring**:
-   - **Servo Power**: Connect the Servos' power lines (Red/Orange) to an **external 5V power source** sharing a common Ground with the Pi. *Do not power servos directly from Pi 5 5V pins, as voltage spikes can cause system resets.*
-   - **Servo Signal**: Connect Pan Servo signal to GPIO 18 (PWM0) and Tilt Servo signal to GPIO 19 (PWM1).
-   - **Relay**: Connect Relay VCC to Pi 5V, GND to Pi GND, and IN (signal) to GPIO 23.
-   - **DHT22**: Connect VCC to Pi 3.3V, GND to Pi GND, and Data to GPIO 4.
+ - **Servo Power**: Connect the Servos' power lines (Red/Orange) to an **external 5V power source** sharing a common Ground with the Pi. *Do not power servos directly from Pi 5 5V pins, as voltage spikes can cause system resets.*
+ - **Servo Signal**: Connect Pan Servo signal to GPIO 18 (PWM0) and Tilt Servo signal to GPIO 19 (PWM1).
+ - **Relay**: Connect Relay VCC to Pi 5V, GND to Pi GND, and IN (signal) to GPIO 23.
+ - **DHT22**: Connect VCC to Pi 3.3V, GND to Pi GND, and Data to GPIO 4.
 
 ---
 
@@ -155,123 +155,123 @@ tilt_servo.value = current_tilt
 OLLAMA_URL = "http://localhost:11434/api/generate"
 
 def log_event_with_gemma(insect_type, count, confidence):
-    """Sends detection telemetry to Ollama running Gemma 2B for logging and reasoning."""
-    prompt = (
-        f"Event Alert: Edge device detected {count} {insect_type}(s) with {confidence:.1f}% confidence. "
-        "Summarize the threat level (Apis_mellifera is protected, Vespula_germanica is aggressive/target). "
-        "Output a single-sentence tactical action log (e.g. Fired Zapper or Tracking Mode)."
-    )
-    
-    payload = {
-        "model": "gemma4:e4b",
-        "prompt": prompt,
-        "stream": False
-    }
-    try:
-        response = requests.post(OLLAMA_URL, json=payload)
-        if response.status_code == 200:
-            tactical_log = response.json().get("response", "").strip()
-            print(f"\n[Gemma Edge Audit Log]: {tactical_log}")
-        else:
-            print("[Ollama Warning]: Failed to reach LLM API.")
-    except Exception as e:
-        print(f"[Ollama Error]: {e}")
+ """Sends detection telemetry to Ollama running Gemma 2B for logging and reasoning."""
+ prompt = (
+ f"Event Alert: Edge device detected {count} {insect_type}(s) with {confidence:.1f}% confidence. "
+ "Summarize the threat level (Apis_mellifera is protected, Vespula_germanica is aggressive/target). "
+ "Output a single-sentence tactical action log (e.g. Fired Zapper or Tracking Mode)."
+ )
+ 
+ payload = {
+ "model": "gemma4:e4b",
+ "prompt": prompt,
+ "stream": False
+ }
+ try:
+ response = requests.post(OLLAMA_URL, json=payload)
+ if response.status_code == 200:
+ tactical_log = response.json().get("response", "").strip()
+ print(f"\n[Gemma Edge Audit Log]: {tactical_log}")
+ else:
+ print("[Ollama Warning]: Failed to reach LLM API.")
+ except Exception as e:
+ print(f"[Ollama Error]: {e}")
 
 # 3. Target Tracking Control Loop
 def track_target(box_center_x, box_center_y, frame_w, frame_h):
-    """Adjusts gimbal servos to center the camera on the insect target."""
-    global current_pan, current_tilt
-    
-    # Calculate offset from center (normalized -1.0 to 1.0)
-    dx = (box_center_x - (frame_w / 2)) / (frame_w / 2)
-    dy = (box_center_y - (frame_h / 2)) / (frame_h / 2)
-    
-    # Proportional controller step size
-    step = 0.05
-    
-    # Adjust servo values
-    if abs(dx) > 0.1: # Threshold deadzone
-        current_pan = max(-1.0, min(1.0, current_pan - (dx * step)))
-        pan_servo.value = current_pan
-        
-    if abs(dy) > 0.1:
-        current_tilt = max(-1.0, min(1.0, current_tilt + (dy * step)))
-        tilt_servo.value = current_tilt
-        
-    # Check if target is perfectly centered
-    if abs(dx) < 0.15 and abs(dy) < 0.15:
-        print("  [Target Locked] Triggering actuator grid/laser...")
-        zapper_relay.on()
-        time.sleep(0.5) # Fire zapper duration
-        zapper_relay.off()
-        return True
-    return False
+ """Adjusts gimbal servos to center the camera on the insect target."""
+ global current_pan, current_tilt
+ 
+ # Calculate offset from center (normalized -1.0 to 1.0)
+ dx = (box_center_x - (frame_w / 2)) / (frame_w / 2)
+ dy = (box_center_y - (frame_h / 2)) / (frame_h / 2)
+ 
+ # Proportional controller step size
+ step = 0.05
+ 
+ # Adjust servo values
+ if abs(dx) > 0.1: # Threshold deadzone
+ current_pan = max(-1.0, min(1.0, current_pan - (dx * step)))
+ pan_servo.value = current_pan
+ 
+ if abs(dy) > 0.1:
+ current_tilt = max(-1.0, min(1.0, current_tilt + (dy * step)))
+ tilt_servo.value = current_tilt
+ 
+ # Check if target is perfectly centered
+ if abs(dx) < 0.15 and abs(dy) < 0.15:
+ print(" [Target Locked] Triggering actuator grid/laser...")
+ zapper_relay.on()
+ time.sleep(0.5) # Fire zapper duration
+ zapper_relay.off()
+ return True
+ return False
 
 def main():
-    # Load model (export trained model to .hef / Hailo format, or load local .pt)
-    # The Hailo runtime parses HEF files; here we use PyTorch CPU fallback as reference.
-    model_path = "models/trained_models/sting_operation_v3/weights/best.pt"
-    if not os.path.exists(model_path):
-        print(f"Model path {model_path} not found. Using yolov8n.pt baseline.")
-        model = YOLO("yolov8n.pt")
-    else:
-        model = YOLO(model_path)
-        
-    # Open camera stream (RPi camera is typically index 0)
-    cap = cv2.VideoCapture(0)
-    if not cap.isOpened():
-        print("ERROR: Camera module not found.")
-        return
-        
-    frame_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
-    frame_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    print(f"Tracking system initialized. Resolution: {frame_w}x{frame_h}")
-    
-    last_llm_log_time = 0
-    
-    try:
-        while True:
-            ret, frame = cap.read()
-            if not ret:
-                break
-                
-            # Run YOLO detection
-            results = model.predict(frame, conf=0.45, verbose=False)
-            
-            for result in results:
-                boxes = result.boxes
-                if len(boxes) > 0:
-                    # Target the first detection
-                    box = boxes[0]
-                    cls_id = int(box.cls[0])
-                    cls_name = model.names[cls_id]
-                    conf = float(box.conf[0])
-                    
-                    # Get center coordinates
-                    x_c, y_c, w, h = box.xywh[0].tolist()
-                    
-                    print(f"Detected: {cls_name} ({conf:.2f}) at [{x_c:.1f}, {y_c:.1f}]")
-                    
-                    # Track target
-                    target_eliminated = track_target(x_c, y_c, frame_w, frame_h)
-                    
-                    # Rate-limit LLM reasoning logs to once every 10 seconds to save CPU
-                    current_time = time.time()
-                    if current_time - last_llm_log_time > 10.0:
-                        log_event_with_gemma(cls_name, len(boxes), conf * 100)
-                        last_llm_log_time = current_time
-                        
-            # Press 'q' on display window (if connected to desktop screen) to quit
-            cv2.imshow("Tracking View", frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
-                break
-    finally:
-        cap.release()
-        cv2.destroyAllWindows()
-        pan_servo.close()
-        tilt_servo.close()
-        zapper_relay.close()
+ # Load model (export trained model to .hef / Hailo format, or load local .pt)
+ # The Hailo runtime parses HEF files; here we use PyTorch CPU fallback as reference.
+ model_path = "models/trained_models/sting_operation_v3/weights/best.pt"
+ if not os.path.exists(model_path):
+ print(f"Model path {model_path} not found. Using yolov8n.pt baseline.")
+ model = YOLO("yolov8n.pt")
+ else:
+ model = YOLO(model_path)
+ 
+ # Open camera stream (RPi camera is typically index 0)
+ cap = cv2.VideoCapture(0)
+ if not cap.isOpened():
+ print("ERROR: Camera module not found.")
+ return
+ 
+ frame_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+ frame_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+ print(f"Tracking system initialized. Resolution: {frame_w}x{frame_h}")
+ 
+ last_llm_log_time = 0
+ 
+ try:
+ while True:
+ ret, frame = cap.read()
+ if not ret:
+ break
+ 
+ # Run YOLO detection
+ results = model.predict(frame, conf=0.45, verbose=False)
+ 
+ for result in results:
+ boxes = result.boxes
+ if len(boxes) > 0:
+ # Target the first detection
+ box = boxes[0]
+ cls_id = int(box.cls[0])
+ cls_name = model.names[cls_id]
+ conf = float(box.conf[0])
+ 
+ # Get center coordinates
+ x_c, y_c, w, h = box.xywh[0].tolist()
+ 
+ print(f"Detected: {cls_name} ({conf:.2f}) at [{x_c:.1f}, {y_c:.1f}]")
+ 
+ # Track target
+ target_eliminated = track_target(x_c, y_c, frame_w, frame_h)
+ 
+ # Rate-limit LLM reasoning logs to once every 10 seconds to save CPU
+ current_time = time.time()
+ if current_time - last_llm_log_time > 10.0:
+ log_event_with_gemma(cls_name, len(boxes), conf * 100)
+ last_llm_log_time = current_time
+ 
+ # Press 'q' on display window (if connected to desktop screen) to quit
+ cv2.imshow("Tracking View", frame)
+ if cv2.waitKey(1) & 0xFF == ord('q'):
+ break
+ finally:
+ cap.release()
+ cv2.destroyAllWindows()
+ pan_servo.close()
+ tilt_servo.close()
+ zapper_relay.close()
 
 if __name__ == '__main__':
-    main()
+ main()
 ```
