@@ -16,6 +16,38 @@
 Anti-hallucination policy: [`.github/agent-fleet/anti-hallucination.md`](./.github/agent-fleet/anti-hallucination.md) | Congruence: [`CAT_CONGRUENCE.md`](./CAT_CONGRUENCE.md)
 <!-- END CAT_CONGRUENCE_SNIPPET -->
 
+<!-- BEGIN PROBLEMS_SOLUTIONS_ECONOMY -->
+## Problems we are solving
+
+**Sting-Operation-AI** is edge vision for apiculture biosecurity - wasp vs bee discrimination on-device.
+
+1. **Invasive wasp pressure** - German wasps and related threats hit NZ honeybee operations hard.
+2. **Cloud vision latency / privacy** - Apiaries need on-site inference, not a remote API round-trip.
+3. **Label noise** - Weak datasets and class confusion destroy field trust.
+4. **Sovereign biosecurity data** - Hive imagery and detections should stay under operator control.
+
+## Solution we have built
+
+| Built capability | What it does |
+| :--- | :--- |
+| **YOLO multi-class detection** | Honeybee / German wasp / hornet classes |
+| **Dataset hygiene tools** | Cleanup and label correction paths |
+| **Edge-ready training/inference** | RPi 5 + Hailo-10H target |
+| **Stack fit** | Biosecurity sister to Byte Size Kai beachhead |
+
+### Local (Taranaki) and national (Aotearoa) economic benefits
+
+| Lever | Benefit |
+| :--- | :--- |
+| **Regional R&D HQ** | Product design and IP stay in New Plymouth / Taranaki - not only Auckland/offshore SaaS |
+| **Primary-sector productivity** | On-farm and rural tools aim to cut waste, protect consents, and support export competitiveness |
+| **Skilled employment pathways** | Edge install, field support, agritech ops, software, compliance, and cultural advisory roles as pilots scale |
+| **Data sovereignty** | Te Mana Raraunga-aligned local custody keeps high-value operational data onshore |
+| **HITL jobs quality** | Agents **inform / draft / prepare / monitor / remind**; humans **advise / sign / file / send / pay** - augment people, do not fake full autonomy |
+
+**Stage honesty (pre-seed):** Impact today is founder R&D, near-term contractors, and EDA/partner leverage. Permanent multi-region payroll follows paid pilots and revenue - we do not invent headcount claims.
+<!-- END PROBLEMS_SOLUTIONS_ECONOMY -->
+
 [![License: Proprietary](https://img.shields.io/badge/License-Proprietary--Commercial-blue.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/Python-3.10%2B-3776ab?logo=python&logoColor=white)](https://www.python.org)
 [![YOLO](https://img.shields.io/badge/YOLO-Ultralytics-111F68)](https://ultralytics.com)
@@ -58,15 +90,6 @@ Object detection system for protecting beehives by identifying honeybees versus 
 
 ---
 
-## The Problem We Are Solving
-
-The problem we are solving is the accurate real-time detection and differentiation of invasive wasps from honeybees in apiculture settings to enable automated protection of beehives while maintaining full data sovereignty on edge hardware.
-
-Additional challenges addressed:
-
-1. **Invasive Species Threat** German wasps (*Vespula germanica*) and Yellow-legged hornets (*Vespa velutina*) threaten honeybee populations.
-2. **Labeling and Training Accuracy** Incorrect class mappings and limited datasets reduce model reliability, especially for wasp detection.
-3. **Edge Deployment Constraints** Traditional cloud-based vision systems introduce latency and privacy risks in remote apiaries.
 
 ---
 
