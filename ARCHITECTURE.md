@@ -9,20 +9,20 @@ This document describes the offline computer vision pipeline and dataset structu
 The sentinel box runs a customized YOLOv8 object detection model on edge hardware:
 
 ```text
-  ┌─────────────┐
-  │ Camera Feed ├──────► [Pre-processing (Resizing, Normalization)]
-  └─────────────┘
-                               │
-                               ▼
-  ┌─────────────┐        ┌─────────────┐
-  │ Hailo-10H    │◄───────┤ YOLOv8 OBB  │
-  │ Accelerator │        │ Classifier  │
-  └──────┬──────┘        └─────────────┘
-         │
-         ▼
-  ┌─────────────┐
-  │ Class Label ├──────► [Actuator logic: Trigger Relay (Pin 18) if Class == 1 (Wasp)]
-  └─────────────┘
+ -------------
+ | Camera Feed |------ [Pre-processing (Resizing, Normalization)]
+ `-------------
+ |
+ 
+ ------------- -------------
+ | Hailo-10H |------- YOLOv8 OBB |
+ | Accelerator | | Classifier |
+ `------------ `-------------
+ |
+ 
+ -------------
+ | Class Label |------ [Actuator logic: Trigger Relay (Pin 18) if Class == 1 (Wasp)]
+ `-------------
 ```
 
 ---

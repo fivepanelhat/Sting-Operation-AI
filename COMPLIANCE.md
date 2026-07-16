@@ -22,7 +22,7 @@ The Animal Welfare Act requires humane eradication methods for pests and provide
 
 ---
 
-## 3. Māori Data Sovereignty (Te Mana Raraunga)
+## 3. Maori Data Sovereignty (Te Mana Raraunga)
 
-* **Biosecurity Data Rights:** Apiaries situated on Māori land or managed by iwi trusts yield telemetry that maps local honey production, biodiversity health, and land coordinates.
+* **Biosecurity Data Rights:** Apiaries situated on Maori land or managed by iwi trusts yield telemetry that maps local honey production, biodiversity health, and land coordinates.
 * **On-Premise Integrity:** Model inference and video streams are processed directly on-device using a Raspberry Pi 5 + Hailo NPU. Telemetry logs and camera frames are not uploaded to external cloud services, retaining data rights with iwi land trusts.

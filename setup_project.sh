@@ -1,5 +1,5 @@
 #!/bin/bash
-# Sting Operation AI — Linux/macOS setup script
+# Sting Operation AI - Linux/macOS setup script
 set -e
 
 echo "Setting up Sting Operation AI..."
