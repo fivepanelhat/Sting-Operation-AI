@@ -38,3 +38,11 @@ Do not open public issues for security flaws. Use a private GitHub Security Advi
 ## Quality gates
 
 - CI (conda/python package), SecOps Bandit, red-team, release drafts on tags.
+
+## Fleet security principles
+
+- **No silent exfiltration** of personal or tenant operational data
+- Prefer **local-first** processing; third-party AI only with explicit operator configuration and UI/docs disclosure
+- Report vulnerabilities via GitHub Security Advisories or the maintainer contact on the org profile
+- High-stakes production changes require human approval (HITL)
+
