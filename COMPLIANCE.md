@@ -3,7 +3,7 @@
 **Coastal Alpine Tech Limited** | **Product:** Sting Operation AI
 Last updated: 19 July 2026
 
-## Privacy · Security · Governance (fleet mandatory)
+## Privacy / Security / Governance (fleet mandatory)
 
 | Pillar | Standard |
 | --- | --- |
