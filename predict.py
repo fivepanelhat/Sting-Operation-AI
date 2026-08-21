@@ -1,8 +1,5 @@
 """
-Sting Operation AI - Predict with Full Data Flywheel Integration
-
-Edge-optimised local YOLO path (model cache, device auto-select, flywheel rotation).
-Optional Roboflow cloud path remains available for lab use only.
+Sting Operation AI - Predict with Full Data Flywheel + SessionEvent Integration
 """
 
 from __future__ import annotations
@@ -15,20 +12,17 @@ import uuid
 from datetime import datetime
 from pathlib import Path
 
-# Ensure repo root / src importable when run as script
 _ROOT = Path(__file__).resolve().parent
 if str(_ROOT) not in sys.path:
     sys.path.insert(0, str(_ROOT))
 
 from src.flywheel_util import rotate_flywheel_if_needed  # noqa: E402
 from src.inference import StingInferenceEngine  # noqa: E402
-from src.model_paths import find_best_model as find_best_model  # re-export for CLI/tools  # noqa: E402
+from src.model_paths import find_best_model as find_best_model  # noqa: E402
+from session_bridge import PortalSession, timed  # noqa: E402
 
-# Re-export for callers/tests
-__all_reexport = find_best_model
-
-# Module-level engine cache (warm weights across repeated CLI use in process)
 _ENGINE: StingInferenceEngine | None = None
+_SESSION = PortalSession("sting")
 
 
 def get_engine(
@@ -62,7 +56,7 @@ def run_local_inference(
     device="",
     imgsz=640,
 ):
-    """Runs inference using a local YOLO model with flywheel + telemetry."""
+    """Runs inference using a local YOLO model with flywheel + SessionEvent."""
     try:
         from coastal_alpine_core.telemetry import TelemetryTracker
         from coastal_alpine_core import DataFlywheel, Trajectory
@@ -77,12 +71,19 @@ def run_local_inference(
     )
     print(f"Using model: {engine.model_path} (device={engine.device}, backend={engine.backend})")
 
+    session_id = _SESSION.new_session_id()
+    t0 = timed()
+    _SESSION.emit(
+        session_id,
+        "prompt_received",
+        actor="sting",
+        payload={"source": str(source)[:120]},
+    )
+
     measurement = None
     if has_core:
         measurement = TelemetryTracker.measure_latency("sting_local_inference")
 
-    t0 = time.perf_counter()
-    # Directory: one engine, many files (reuse weights)
     source_path = Path(source)
     if source_path.is_dir():
         images = sorted(
@@ -97,7 +98,9 @@ def run_local_inference(
     else:
         results = [engine.predict(source, conf=conf, save=save)]
 
-    # Flywheel (per-result + rotation)
+    wasp_any = any(getattr(r, "wasp_alert", False) for r in results)
+    total_det = sum(len(r.detections) for r in results)
+
     if has_core:
         try:
             flywheel = DataFlywheel(storage_path=engine.flywheel_path)
@@ -146,6 +149,17 @@ def run_local_inference(
         elapsed = time.perf_counter() - t0
         print(f"Inference batch completed in {elapsed:.3f}s (core SDK not installed)")
 
+    outcome = "wasp_alert" if wasp_any else ("success" if total_det > 0 else "no_detection")
+    _SESSION.complete_cycle(
+        session_id,
+        action="sting.local_inference",
+        outcome=outcome,
+        latency_seconds=timed() - t0,
+        input_summary=f"source={str(source)[:80]}",
+        output_summary=f"detections={total_det}, wasp={wasp_any}",
+        flywheel_path=getattr(engine, "flywheel_path", None),
+    )
+
     print("\n=== Local YOLO Detection Summary ===")
     for result in results:
         base = os.path.basename(str(result.source))
@@ -165,11 +179,9 @@ def run_local_inference(
 
 
 def load_env_key():
-    """Attempts to read ROBOFLOW_API_KEY from environment or .env file."""
     key = os.environ.get("ROBOFLOW_API_KEY")
     if key:
         return key
-
     env_path = ".env"
     if os.path.exists(env_path):
         with open(env_path, "r", encoding="utf-8") as f:
@@ -180,32 +192,25 @@ def load_env_key():
 
 
 def run_roboflow_inference(source, conf=0.25, save=True):
-    """Runs inference using Roboflow's hosted model API (lab only — not edge)."""
     print("Initializing Roboflow Hosted API Client...")
     try:
         from roboflow import Roboflow
     except ImportError:
-        print(
-            "ERROR: Roboflow SDK not installed! Run `pip install roboflow` first."
-        )
+        print("ERROR: Roboflow SDK not installed! Run `pip install roboflow` first.")
         sys.exit(1)
 
     api_key = load_env_key()
     if not api_key:
         import getpass
 
-        api_key = getpass.getpass(
-            "Please enter your Roboflow Private API Key: "
-        ).strip()
+        api_key = getpass.getpass("Please enter your Roboflow Private API Key: ").strip()
         if not api_key:
             print("ERROR: Roboflow API key is required for cloud inference.")
             sys.exit(1)
 
     try:
         rf = Roboflow(api_key=api_key)
-        project = rf.workspace("ws-workspace-yhner").project(
-            "example-ueewe-bw1lr"
-        )
+        project = rf.workspace("ws-workspace-yhner").project("example-ueewe-bw1lr")
         model = project.version(1).model
     except Exception as e:
         print(f"ERROR: Failed to initialize Roboflow model: {e}")
@@ -242,7 +247,6 @@ def run_roboflow_inference(source, conf=0.25, save=True):
                     cls_name = pred.get("class", "unknown")
                     conf_score = float(pred.get("confidence", 0.0))
                     class_counts[cls_name] = class_counts.get(cls_name, 0) + 1
-
                     x = pred.get("x", 0.0)
                     y = pred.get("y", 0.0)
                     w = pred.get("width", 0.0)
@@ -251,7 +255,6 @@ def run_roboflow_inference(source, conf=0.25, save=True):
                         f"  - Class: {cls_name} (conf: {conf_score:.2f}), "
                         f"BBox Center: [{x:.1f}, {y:.1f}], Size: [{w:.1f}x{h:.1f}]"
                     )
-
                 summary_str = ", ".join(
                     f"{count} {name}(s)" for name, count in class_counts.items()
                 )
@@ -269,50 +272,14 @@ def run_roboflow_inference(source, conf=0.25, save=True):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(
-        description="Sting Operation AI - Inference Script"
-    )
-    parser.add_argument(
-        "source", type=str, help="Path to image, directory, or video source"
-    )
-    parser.add_argument(
-        "-m",
-        "--model",
-        type=str,
-        default=None,
-        help="Path to YOLO model weights (.pt)",
-    )
-    parser.add_argument(
-        "-c",
-        "--conf",
-        type=float,
-        default=0.25,
-        help="Confidence threshold (default: 0.25)",
-    )
-    parser.add_argument(
-        "--no-save",
-        action="store_true",
-        help="Do not save visual prediction results",
-    )
-    parser.add_argument(
-        "-d",
-        "--device",
-        type=str,
-        default="",
-        help="Device for local YOLO (cpu, cuda, or 0). Default: auto",
-    )
-    parser.add_argument(
-        "--imgsz",
-        type=int,
-        default=int(os.getenv("STING_IMGSZ", "640")),
-        help="Inference image size (default: 640; lower = faster on Pi CPU)",
-    )
-    parser.add_argument(
-        "-rf",
-        "--roboflow",
-        action="store_true",
-        help="Use Roboflow Cloud Inference API instead of local model",
-    )
+    parser = argparse.ArgumentParser(description="Sting Operation AI - Inference Script")
+    parser.add_argument("source", type=str, help="Path to image, directory, or video source")
+    parser.add_argument("-m", "--model", type=str, default=None, help="Path to YOLO model weights (.pt)")
+    parser.add_argument("-c", "--conf", type=float, default=0.25, help="Confidence threshold")
+    parser.add_argument("--no-save", action="store_true", help="Do not save visual prediction results")
+    parser.add_argument("-d", "--device", type=str, default="", help="Device for local YOLO")
+    parser.add_argument("--imgsz", type=int, default=int(os.getenv("STING_IMGSZ", "640")))
+    parser.add_argument("-rf", "--roboflow", action="store_true", help="Use Roboflow Cloud")
     args = parser.parse_args()
 
     if not os.path.exists(args.source):
@@ -323,10 +290,5 @@ if __name__ == "__main__":
         run_roboflow_inference(args.source, args.conf, not args.no_save)
     else:
         run_local_inference(
-            args.source,
-            args.model,
-            args.conf,
-            not args.no_save,
-            args.device,
-            args.imgsz,
+            args.source, args.model, args.conf, not args.no_save, args.device, args.imgsz
         )
